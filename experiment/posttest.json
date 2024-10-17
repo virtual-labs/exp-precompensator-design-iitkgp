@@ -35,7 +35,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Q4. Consider the system <br/><img src=./images/poq4.png><br/>Is this system controllable and observable?",
+      "question": "Q4. What is the characteristic equation of the closed loop system?",
       "answers": {
         "a": "<img src=./images/poq3a.png>",
         "b": "<img src=./images/poq3b.png>",
@@ -46,7 +46,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Q5. What is the state equation of a linear time varying discrete time system?",
+      "question": "Q5. Which of the following is used to design pre-compensator gain?",
       "answers": {
         "a": "<img src=./images/poq5a.png>",
         "b": "<img src=./images/poq5b.png>",
