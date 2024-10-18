@@ -1,0 +1,63 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "Q1. Which of the following method is not used to design state feedback controller?",
+      "answers": {
+        "a": "Direct substitution method",
+        "b": "Transformation method",
+        "c": "Ackermann’s method",
+        "d": "All of the above"
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q2. What is the necessary condition for pole placement using state feedback design?",
+      "answers": {
+        "a": "All poles must be lies on the left half of the s plane",
+        "b": "System should be controllable",
+        "c": "System should be observable",
+        "d": "Rank of the controllability matrix should be less than the order of the system"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q3. What is the assumption considered to design state feedback control?",
+      "answers": {
+        "a": "System should be controllable",
+        "b": "System should be observable ",
+        "c": "All states are measurable",
+        "d": "All poles must be lies on the left half of the s plane"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q4. What is the design goal of the state feedback control?",
+      "answers": {
+        "a": "To improve transient response",
+        "b": "To cancel the steady state error",
+        "c": "To measure all state variable",
+        "d": "None of the above"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q5. What is the design goal of the pre-compensator?",
+      "answers": {
+        "a": "To improve transient response",
+        "b": "To cancel the steady state error",
+        "c": "To measure all state variable",
+        "d": "None of the above"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    }
+	
+	
+  ]
+}
+
