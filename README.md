@@ -14,10 +14,13 @@
 Linear time invariant system may be represented in state space form by the following equations:
 </br>
 State equation:
-$$ \dot{x}(t)=A x(t)+B u(t) \tag{1a} $$
+
+$$\dot{x}(t)=A x(t)+B u(t) \tag{1a}$$
+
 Output equation:
-$$ y(t)= C x(t) \tag{1b} $$
-</br>
+
+$$y(t)= C x(t) \tag{1b}$$
+
 where, <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">x</span>(<span style="font-family:Bodoni MT;font-style:italic;font-size:18px">t</span>) is state vector, <span style="font-family:Sitka Text;font-style:italic">y</span>(<span style="font-family:Bodoni MT;font-style:italic;font-size:18px">t</span>) is output vector, 
 <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">u</span> is input or control vector, <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">A</span> is system matrix, 
 <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">B</span> is input matrix, <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">C</span> is output matrix.</br></br>
@@ -30,7 +33,8 @@ Controller design in state-space involves selection of suitable feedback gain ve
 
         
 <div align="center">
-<img class="img-fluid"  src="experiment/images/Block diagram for state feedback.png" alt=""><br>
+<img class="img-fluid"  src="experiment/images/Block diagram for state feedback.png" alt="">
+
 <figcaption style="color:black"> Fig.1. Plant with state feedback </figcaption>
 </div>
 <br/>
@@ -38,7 +42,8 @@ The designed state feedback controller meets transient requirements, but need to
 The reference signal can be used with a pre-compensator to cancel the steady state error.
 <br/>
 <div align="center">
-<img class="img-fluid"  src="experiment/images/Block diagram with precompensator.png" alt=""><br>
+<img class="img-fluid"  src="experiment/images/Block diagram with precompensator.png" alt="">
+
 <figcaption style="color:black"> Fig.2. Plant with state feedback and pre-compensator </figcaption>
 </div> 
 
