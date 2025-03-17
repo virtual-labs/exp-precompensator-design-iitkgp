@@ -309,6 +309,7 @@ function EP(){
 	var Cntrl_Test3;
     var Cntrl_Test4;
 	var Cntrl_Test5;
+	
 function SFG(){
 
 	
@@ -453,21 +454,21 @@ function SFG(){
 			   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
 			   
 			   var p1p2p3p4 = math.multiply(p1,p2,p3,p4);
-			   var a23b4 = math.multiply(a23,b4);
+			  /*  var a23b4 = math.multiply(a23,b4);
 			   var a43b2 = math.multiply(a43,b2);
 			   
 			   //var k1 = math.divide(p1p2p3p4, math.add(a23b4,-a43b2));
 			   
 			   var k1=math.divide(math.round(math.multiply(math.divide(p1p2p3p4, math.add(a23b4,-a43b2)),1000)),1000);
 			   
-			   var k2 = math.divide(math.round(math.multiply(math.divide(math.add(p1,p2,p3,p4,a22),b2),1000)),1000);
+			   var k2 = math.divide(math.round(math.multiply(math.divide(math.add(p1,p2,p3,p4,a22),b2),1000)),1000); */
 			   
 			   var p123 = math.multiply(p1,p2,p3);
 			   var p124 = math.multiply(p1,p2,p4);
 			   var p234 = math.multiply(p2,p3,p4);
 			   var p134 = math.multiply(p1,p3,p4);
 			   
-			   var a42a23 = math.multiply(a42,a23);
+			   /* var a42a23 = math.multiply(a42,a23);
 			   var a43b2k2 = math.multiply(a43,b2,k2);
 			   var a22a43 = math.multiply(a22,a43);
 			   var a23b4k2 = math.multiply(a23,b4,k2);
@@ -480,7 +481,7 @@ function SFG(){
 			   
 			   var den3 = math.add(a42b2,b2b4k2,-a22b4,b2b4k2);
 		   
-			   var k3 = math.divide(math.round(math.multiply(math.divide(num3,den3),1000)),1000);
+			   var k3 = math.divide(math.round(math.multiply(math.divide(num3,den3),1000)),1000); */
 			   
 			   var p12 = math.multiply(p1,p2);
 			   var p13 = math.multiply(p1,p3);
@@ -489,14 +490,22 @@ function SFG(){
 			   var p24 = math.multiply(p2,p4);
 			   var p34 = math.multiply(p3,p4);
 			   
-			   var b4k2 = math.multiply(b4,k2);
+			  /*  var b4k2 = math.multiply(b4,k2);
 			   var b2k1 = math.multiply(b2,k1);
 			   
 			   var num4 = math.add(p12,p13,p14,p23,p24,p34,a43,-b4k2,-b2k1);
 			   var den4 = math.add(a42b2,-b2b4k2);
 			   
-			   var k4 = math.divide(math.round(math.multiply(math.divide(num4,den4),1000)),1000);
+			   var k4 = math.divide(math.round(math.multiply(math.divide(num4,den4),1000)),1000); */
 			   
+			   var coeff = [ [0,b2,0,b4],[b2,0,b4, math.add(math.multiply(a42,b2),-math.multiply(a22,b4))],[0,math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),math.add(math.multiply(a42,b2),-math.multiply(a22,b4)),0],[math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),0,0,0] ];
+			   var cont = [  math.add(p1,p2,p3,p4,a22), math.add(p12,p13,p14,p23,p24,p34,a43),math.add(p123,p124,p134,p234,math.multiply(a23,a42),-math.multiply(a22,a43)),p1p2p3p4 ];
+			   var sol = math.lusolve(coeff,cont);
+			   
+			   var k1 = math.divide(math.round(math.multiply(sol[0][0],1000)),1000);
+			   var k2 = math.divide(math.round(math.multiply(sol[1][0],1000)),1000);
+			   var k3 = math.divide(math.round(math.multiply(sol[2][0],1000)),1000);
+			   var k4 = math.divide(math.round(math.multiply(sol[3][0],1000)),1000);
 			   
 			   console.log(k1);
 			   console.log(k2);
@@ -524,7 +533,9 @@ function SFG(){
 			   
 			   console.log(K);
 			   
-			   var ABK = math.add(mA,math.multiply(mB,K));
+			   //var ABK = math.add(mA,-math.multiply(mB,K));
+			   var ABK = math.matrix([[a11, a12, a13, a14], [-math.multiply(b2,k1), math.add(a22,-math.multiply(b2,k2)), math.add(a23,-math.multiply(b2,k3)), -math.multiply(b2,k4)], [a31, a32, a33, a34], [-math.multiply(b4,k1), math.add(a42,-math.multiply(b4,k2)), math.add(a43,-math.multiply(b4,k3)), -math.multiply(b4,k4)]]);;
+			   console.log(ABK);
 			   var iABK = math.inv(ABK);
 			   var CABKB = math.multiply(mC1,iABK,mB);
 			   
@@ -538,7 +549,7 @@ function SFG(){
 			   
 			   //outputText2=" b<sub>0</sub>="+b0+";  b<sub>1</sub>="+b1+"; b<sub>2</sub>="+b2+ "; a<sub>0</sub>="+a0+";  a<sub>1</sub>="+a1+";  a<sub>2</sub>="+a2+ "";
 			   
-			   var Padd = math.add(p1,p2,p3,p4,a22);
+			   var Padd = math.add(p1,p2,p3,p4);
 			   var P12add = math.add(p12,p13,p14,p23,p24,p34);
 			   var P123add = math.add(p123,p124,p234,p134);
 			   
@@ -554,9 +565,14 @@ function SFG(){
 			   var a22a43 = math.divide(math.round(math.multiply(math.multiply(a22,a43),1000)),1000);
 			   var a43b2 = math.divide(math.round(math.multiply(math.multiply(a43,b2),1000)),1000);
 			   
+			   var a42b2_a22b4 = math.add(a42b2,-a22b4);
+			   var b4a23_a43b2 = math.add(b4a23,-a43b2);
+			   var a22a43_a42a23 = math.add(a22a43,-a42a23);
+			   
+			   
 			   CharEq=" Characteristic equation of the closed loop system\t:";
 			   document.getElementById("Char_Eq").innerHTML=CharEq;
-			   document.getElementById('Closed_loop_char').innerHTML = ' \t s<sup>4</sup>\t+[\t'+ b2+'k<sub>2</sub>\t-\t\t('+a22+')\t]\t s<sup>3</sup>\t+[\t'+b4+'\tk<sub>2</sub>\t-\t('+a43+')\t-\t('+b2b4+'\tk<sub>2</sub>k<sub>4</sub>)+('+a42b2+')\tk<sub>4</sub>\t+\t'+b2+'\tk<sub>1</sub>\t]\ts<sup>2</sup>\t+\t[\t('+b4a23+')\tk<sub>2</sub>\t-\t('+b2b4+')\tk<sub>3</sub>k<sub>2</sub>\t-\t('+a42a23+')\t+\t('+a42b2+')\tk<sub>3</sub>\t-\t('+a22b4+')\tk<sub>3</sub>\t+\t('+a22a43+')\t+\t('+b2b4+')k<sub>2</sub>k<sub>3</sub>\t-\t('+a43b2+')k<sub>2</sub>]\ts\t+\t[\t('+b2b4+')\tk<sub>1</sub>k<sub>3</sub>\t-\t('+a43b2+')k<sub>1</sub>\t=\t('+b4a23+')k<sub>1</sub>\t-\t('+b2b4+')k<sub>1</sub>k<sub>3</sub>]\t=\t0';                                                                                                                             
+			   document.getElementById('Closed_loop_char').innerHTML = ' \t s<sup>4</sup>\t+ \ts<sup>3</sup>\t [\t('+ b2+')\tk<sub>2</sub>\t+('+ b4+')\tk<sub>4</sub>\t-\t('+a22+')\t]\t + \t s<sup>2</sup>\t[\t('+b4+')\tk<sub>3</sub>\t+\t('+b2+')\tk<sub>1</sub>\t+\t('+a42b2_a22b4+')\tk<sub>4</sub>\t-\t('+a43+')\t]\t+\ts\t[\t('+b4a23_a43b2+')\tk<sub>2</sub>\t+\t('+a42b2_a22b4+')\tk<sub>3</sub>\t+\t\t('+a22a43_a42a23+')\t]+\t[\t('+b4a23_a43b2+')k<sub>1</sub>\t]\t=\t0';                                                                                                                             
 			   
 			   var Nb = N._data[0];
 			   //document.getElementById("Pre-Compensator_Gain_Value").innerHTML=Nb;
