@@ -7,7 +7,7 @@
 <b>Discipline | <b>Electrical Engineering 
 :--|:--|
 <b> Lab | <b> Digital Control Laboratory
-<b> Experiment|     <b> Control design via pole placement for pendulum on cart with Pre-compensator design and Exp 7
+<b> Experiment|     <b> Control Design via Pole Placement for an Inverted Pendulum on a Cart with Pre-Compensator Design and Exp 7
 
 ### About the Experiment 
 
