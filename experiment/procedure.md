@@ -47,12 +47,12 @@
 <b>Fig. 5. Button to calculate the state feedback and pre-compensator gain values </b>
 </div>
 
-6. Click on the 'Rank' or 'Determinant'  or "inference' or ' Gain Values' buttons to get the the Controllability test information and gain values. 
+6. Click on the 'Rank' or 'Determinant'  or "Inference' or ' Gain Values' buttons to get the the Controllability test information and gain values. 
 
 <div align="center">
 <img class="img-fluid"  src="./images/Qc.png" alt="">
 
-<b>Fig. 6. Rank, determinant, inference and gain values of the Controllability test and feedback gain with pre-compensator information </b>						  
+<b>Fig. 6. Rank, Determinant, Inference and Gain Values of the Controllability test and feedback gain with pre-compensator information </b>						  
 </div>
 
 7. Click on 'Clear' button to enter the new parameter values of the system.
