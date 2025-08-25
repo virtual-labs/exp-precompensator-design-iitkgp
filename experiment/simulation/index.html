@@ -99,6 +99,9 @@
   
   
 </head>
+
+
+
 <body><!--body tag start-->
     <div class="container p-3 my-3 text-primary text-center border"><!--First Container under body tag start-->
         <div class="row"><!--First row under 1st container start-->
@@ -129,7 +132,8 @@
         
     </div><!--First Container under body tag end-->
     
-    	
+    
+	
     <div class="container p-3 my-5 text-left border"><!--3rd Container under body tag start-->
       <div class="row"><!--First row under 3rd container start-->
         <div class="col-md-1"></div><!--First col under 3rd container start& end-->
@@ -176,11 +180,11 @@
 			Enter the values of the following parameters: <br/><br/>
 			<!--<img class = "img-fluid" src="./images/Continuous_System.png" class="img-fluid" > <br/></br>-->
 			
-			Mass of the cart :  M (kg) = <input type="number" id="M1" min="0.1" value="0.5" max="1" step="0.05" style="position:absolute;width:25%" ><br/></br>
-			Mass of the pendulum : m (kg) = <input type="number" id="m1" min="0.1" value="0.2" max="1" step="0.05" style="position:absolute;width:25%" ><br/></br>
-			Coefficient of friction for cart :  b (N/m/sec) = <input type="number" id="bc" min="0.01" value="0.1" max="1" step="0.01" style="position:absolute;width:25%" ><br/></br>
-            Length to pendulum center of mass : l (m) = <input type="number" id="l1" min="0.1" value="0.3" max="1" step="0.05" style="position:absolute;width:25%" ><br/></br>	
-            Mass moment of inertia of the pendulum : I (kg.m^2) = <input type="number" id="I1" min="0.001" value="0.006" max="1" step="0.001" style="position:absolute;width:25%" ><br/></br>
+			<span style="position:absolute;left:33%">Mass of the cart :  M (kg)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="M1" min="0.1" value="0.5" max="1" step="0.05"  ></span><br/></br>
+			<span style="position:absolute;left:33%">Mass of the pendulum : m (kg)</span><span style="position:absolute;left:63%;text-align:center"> = <input type="number" id="m1" min="0.1" value="0.2" max="1" step="0.05"  ></span><br/></br>
+			<span style="position:absolute;left:33%">Coefficient of friction for cart :  b (N/m/sec)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="bc" min="0.01" value="0.1" max="1" step="0.01"  ></span><br/></br>
+            <span style="position:absolute;left:33%">Length to pendulum center of mass : l (m)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="l1" min="0.1" value="0.3" max="1" step="0.05" ></span><br/></br>	
+            <span style="position:absolute;left:33%">Mass moment of inertia of the pendulum : I (kg.m^2)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="I1" min="0.001" value="0.006" max="1" step="0.001" ></span><br/></br>
             
 			
 			<div class="d-inline-flex">
@@ -252,10 +256,10 @@
 						
 			 <br/><br/>
 						
-			Pole 1 :  P1 = <input type="number" id="np1" min="-500" value="-1" max="0" step="0.05" style="position:absolute;width:25%" ><br/></br>
-			Pole 2 :  P2 = <input type="number" id="np2" min="-500" value="-2" max="0" step="0.05" style="position:absolute;width:25%" ><br/></br>
-			Pole 3 :  P3 = <input type="number" id="np3" min="-500" value="-3" max="0" step="0.05" style="position:absolute;width:25%" ><br/></br>
-			Pole 4 :  P4 = <input type="number" id="np4" min="-500" value="-4" max="0" step="0.05" style="position:absolute;width:25%" ><br/></br>
+			Pole 1 :  P1 = <input type="number" id="np1" min="-500" value="-1" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
+			Pole 2 :  P2 = <input type="number" id="np2" min="-500" value="-2" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
+			Pole 3 :  P3 = <input type="number" id="np3" min="-500" value="-3" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
+			Pole 4 :  P4 = <input type="number" id="np4" min="-500" value="-4" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
 			
 						
 			<p id="Pole_Value1"/>
