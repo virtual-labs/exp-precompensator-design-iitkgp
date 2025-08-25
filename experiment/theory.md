@@ -15,7 +15,7 @@ With this control input, the closed loop system is as follows:
 $$ \dot{x}(t)=(A-BK) x(t)  $$
 The characteristic equation of the closed loop system is,
 $$ |sI-(A-BK)|=0  $$
-For <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">n</span>th order system, the characteristic equation is,
+For <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">n</span><sup>th</sup> order system, the characteristic equation is,
 $$ s^n + k_n s^{n-1} + k_{n-1} s^{n-2} + ... + k_1=0 \tag{3} $$
 The desired closed loop poles are <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">P</span><sub><span style="font-family:Bodoni MT;font-style:italic;font-size:18px">1</span></sub>, <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">P</span><sub><span style="font-family:Bodoni MT;font-style:italic;font-size:18px">2</span></sub>, <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">P</span><sub><span style="font-family:Bodoni MT;font-style:italic;font-size:18px">3</span></sub>, ... , <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">P</span><sub><span style="font-family:Bodoni MT;font-style:italic;font-size:18px">n</span></sub>.
 Then the desired characteristic equation is:
