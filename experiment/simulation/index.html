@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="en"><!--html tag start-->
 <head>
-    <title> Control Design via Pole Placement for an Inverted Pendulum on a Cart with Pre-Compensator Design </title>
+    <title> Control Design via Pole Placement for an Inverted Pendulum on a Cart with Pre-Compensator Design</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,7 +122,7 @@
 
             </div><!--First col under 2nd row end-->
             <div class="col-md-6"><!--2nd col under 2nd row start-->
-                <p class="h1"> <b> Simulation </b> </p>
+                <p class="h1"> <b> Simulation</b> </p>
             </div><!--2nd col under 2nd row end-->
             <div class="col-md-3"><!--3rd col under 2nd row start-->
 
@@ -145,7 +145,7 @@
 					  <li> Click on 'State Space Model' button to get the state space form of the system. </li><br/>
 					  
 					 
-					 <li> Click on ' Enter the pole Location' button to enter desired pole values. </li><br/> 
+					 <li> Click on ' Enter the Pole Location' button to enter desired pole values. </li><br/> 
 					 
 					 <li> Enter the desired negative pole values. </li><br/> 
 					 
@@ -180,11 +180,11 @@
 			Enter the values of the following parameters: <br/><br/>
 			<!--<img class = "img-fluid" src="./images/Continuous_System.png" class="img-fluid" > <br/></br>-->
 			
-			<span style="position:absolute;left:33%">Mass of the cart :  M (kg)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="M1" min="0.1" value="0.5" max="1" step="0.05"  ></span><br/></br>
-			<span style="position:absolute;left:33%">Mass of the pendulum : m (kg)</span><span style="position:absolute;left:63%;text-align:center"> = <input type="number" id="m1" min="0.1" value="0.2" max="1" step="0.05"  ></span><br/></br>
-			<span style="position:absolute;left:33%">Coefficient of friction for cart :  b (N/m/sec)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="bc" min="0.01" value="0.1" max="1" step="0.01"  ></span><br/></br>
-            <span style="position:absolute;left:33%">Length to pendulum center of mass : l (m)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="l1" min="0.1" value="0.3" max="1" step="0.05" ></span><br/></br>	
-            <span style="position:absolute;left:33%">Mass moment of inertia of the pendulum : I (kg.m^2)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="I1" min="0.001" value="0.006" max="1" step="0.001" ></span><br/></br>
+			<span style="position:absolute;left:33%">Mass of the cart :  <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">M</span> (kg)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="M1" min="0.1" value="0.5" max="1" step="0.05"  ></span><br/></br>
+			<span style="position:absolute;left:33%">Mass of the pendulum : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">m</span> (kg)</span><span style="position:absolute;left:63%;text-align:center"> = <input type="number" id="m1" min="0.1" value="0.2" max="1" step="0.05"  ></span><br/></br>
+			<span style="position:absolute;left:33%">Coefficient of friction for cart :  <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">b</span> (N/m/sec)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="bc" min="0.01" value="0.1" max="1" step="0.01"  ></span><br/></br>
+            <span style="position:absolute;left:33%">Length to pendulum center of mass : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">l</span> (m)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="l1" min="0.1" value="0.3" max="1" step="0.05" ></span><br/></br>	
+            <span style="position:absolute;left:33%">Mass moment of inertia of the pendulum : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">I</span> (kg.m<sup>2</sup>)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="I1" min="0.001" value="0.006" max="1" step="0.001" ></span><br/></br>
             
 			
 			<div class="d-inline-flex">
@@ -248,7 +248,7 @@
 			
 			</div>-->
 			<br><br>
-			<button class="btn btn-success" id ="run1" onclick="EP()" style="visibility:hidden">Enter the desired pole location</button>				
+			<button class="btn btn-success" id ="run1" onclick="EP()" style="visibility:hidden">Enter the Pole Location</button>				
 			
 			<div id="tfbody11" class="card border-0" style="display:none; width:100%;background-color:none">
 			<br/><br/>
@@ -366,15 +366,15 @@
 			
 			$$ Q_c = [B \ AB \ A^2B \ A^3B] $$
 				
-			<span class="card-text" id="matQcB" ></span><br/<br/>
-			<span class="card-text" id="matQcAB" ></span><br/<br/>
-			<span class="card-text" id="matQcAAB" ></span><br/<br/>
-			<span class="card-text" id="matQcAAAB" ></span><br/<br/><br/>
-			<span class="card-text" id="matQc" ></span><br/<br/>
+			<span class="card-text" id="matQcB" ></span><br/><br/>
+			<span class="card-text" id="matQcAB" ></span><br/><br/>
+			<span class="card-text" id="matQcAAB" ></span><br/><br/>
+			<span class="card-text" id="matQcAAAB" ></span><br/><br/><br/>
+			<span class="card-text" id="matQc" ></span><br/><br/>
 			 
-			<button class="btn btn-success" onclick="showRank()">Rank of Qc</button>
+			<button class="btn btn-success" onclick="showRank()">Rank of <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">Q<sub>c</sub></span></button>
 				<span id="Cntrl_Test1" style="display:none"></span><br/><br/>
-			<button class="btn btn-success" onclick="showDetQc()">Determinant of Qc</button>
+			<button class="btn btn-success" onclick="showDetQc()">Determinant of <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">Q<sub>c</sub></span></button>
 			    <span id="Cntrl_Test2" style="display:none"></span><br/><br/>
 			<button class="btn btn-success" onclick="showinfo()">Inference</button>
 				<span id="Cntrl_Test3" style="display:none"></span><br/><br/>

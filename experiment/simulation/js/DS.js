@@ -68,10 +68,10 @@ function system(){
 			
 			
 			
-			document.getElementById('matA').innerHTML = ' A =['+ a11+',\t'+a12+',\t'+a13+',\t'+a14+';\t\t'+a21+','+a22+',\t'+a23+',\t'+a24+';\t\t'+a31+',\t'+a32+',\t'+a33+',\t'+a34+';\t\t'+a41+',\t'+a42+',\t'+a43+',\t'+a44+']';
-			document.getElementById('matB').innerHTML = ' B =['+ b1+';\t\t'+b2+';\t\t'+b3+';\t'+b4+']';
-			document.getElementById('matC').innerHTML = ' C =['+ c11+',\t'+c12+',\t'+c13+',\t'+c14+';\t\t'+c21+','+c22+',\t'+c23+',\t'+c24+']';
-			document.getElementById('matD').innerHTML = ' D =['+ d11+';\t\t'+d21+']';
+			document.getElementById('matA').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A</span> =['+ a11+',\t'+a12+',\t'+a13+',\t'+a14+';\t\t'+a21+','+a22+',\t'+a23+',\t'+a24+';\t\t'+a31+',\t'+a32+',\t'+a33+',\t'+a34+';\t\t'+a41+',\t'+a42+',\t'+a43+',\t'+a44+']';
+			document.getElementById('matB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> B </span>=['+ b1+';\t\t'+b2+';\t\t'+b3+';\t'+b4+']';
+			document.getElementById('matC').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> C </span>=['+ c11+',\t'+c12+',\t'+c13+',\t'+c14+';\t\t'+c21+','+c22+',\t'+c23+',\t'+c24+']';
+			document.getElementById('matD').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> D </span> =['+ d11+';\t\t'+d21+']';
 			
 			console.log(den);
 			
@@ -426,10 +426,10 @@ function SFG(){
 			var AAB= math.matrix([aab1, aab2, aab3, aab4]);
 			var AAAB= math.matrix([aaab1, aaab2, aaab3, aaab4]);
 			
-			document.getElementById('matQcB').innerHTML = 'B ='+ B;
-			document.getElementById('matQcAB').innerHTML = ' AB ='+ AB;
-			document.getElementById('matQcAAB').innerHTML = ' A<sup>2</sup>B ='+ AAB;
-			document.getElementById('matQcAAAB').innerHTML = ' A<sup>3</sup>B ='+ AAAB;
+			document.getElementById('matQcB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px">B</span> ='+ B;
+			document.getElementById('matQcAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> AB</span> ='+ AB;
+			document.getElementById('matQcAAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A<sup>2</sup>B</span> ='+ AAB;
+			document.getElementById('matQcAAAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A<sup>3</sup>B</span> ='+ AAAB;
 			
 			//var Qc1= math.matrix([[0, 1.818, -0.331, 12.209], [1.818, -0.331, 12.209, -4.433], [0, 4.545, -0.827, 141.873], [4.545, -0.827, 141.873, -31.349]]);
 			//var DQc1=math.det(Qc1);
@@ -437,7 +437,7 @@ function SFG(){
 			
 			var Qc= math.matrix([[b1, ab1, aab1, aaab1],[b2, ab2, aab2, aaab2],[b3, ab3, aab3, aaab3],[b4, ab4, aab4, aaab4]]);
 			
-			document.getElementById('matQc').innerHTML = ' Q<sub>c</sub> =['+ b1+',\t'+ab1+',\t'+aab1+',\t'+aaab1+';\t\t'+b2+','+ab2+',\t'+aab2+',\t'+aaab2+';\t\t'+b3+',\t'+ab3+',\t'+aab3+',\t'+aaab3+';\t\t'+b4+',\t'+ab4+',\t'+aab4+',\t'+aaab4+']'
+			document.getElementById('matQc').innerHTML = ' <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">Q<sub>c</sub></span> =['+ b1+',\t'+ab1+',\t'+aab1+',\t'+aaab1+';\t\t'+b2+','+ab2+',\t'+aab2+',\t'+aaab2+';\t\t'+b3+',\t'+ab3+',\t'+aab3+',\t'+aaab3+';\t\t'+b4+',\t'+ab4+',\t'+aab4+',\t'+aaab4+']'
 			
 			var DQc= math.divide(math.round(math.multiply(math.det(Qc),1000)),1000);
 			
@@ -446,8 +446,8 @@ function SFG(){
 			//DQc=0;
 			
 			if (DQc!=0)
-			{  Cntrl_Test1=" Rank of Q<sub>c</sub> = Order of A = n = 4";			   
-			   Cntrl_Test2="Determinent of Q<sub>c</sub> = " +DQc+ "";				    
+			{  Cntrl_Test1=" Rank is 4";			   
+			   Cntrl_Test2=" Determinent is" +'\t' + DQc;				    
 			   Cntrl_Test3=" System is completely controllable";
 			   document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
 			   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
@@ -582,8 +582,8 @@ function SFG(){
 			   
 			}
 			   else 
-			   {   Cntrl_Test1=" Rank of Q<sub>c</sub> < Order of A = n = 4";
-		           Cntrl_Test2="Determinent of Q<sub>c</sub> = " +DQc+ "";		
+			   {   Cntrl_Test1=" Rank < n = 4";
+		           Cntrl_Test2="Determinent is" + "" + DQc + "";		
 			       Cntrl_Test3=" System is not controllable";
 			       document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
 				   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
