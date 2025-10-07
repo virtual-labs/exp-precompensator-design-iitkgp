@@ -13,7 +13,6 @@
 <li> Click on 'State Space Model' button to get the state space form of the system.</li></br>
 <div align="center">
 <img class="img-fluid"  src="./images/2.png" alt=""><br>           
-</div>
 
 <b>Fig. 2. Button to get the state Space form of the system</b><br/>							  
 </div><br/>
