@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "Q1. Which of the following method is not used to design state feedback controller?",
+      "question": "Q1. Which of the following method is used to design state feedback controller?",
       "answers": {
         "a": "Direct substitution method",
         "b": "Transformation method",
@@ -24,12 +24,12 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Q3. What is the assumption considered to design state feedback control?",
+      "question": "Q3. What is the assumption considered when designing state feedback control?",
       "answers": {
-        "a": "System should be controllable",
-        "b": "System should be observable ",
+        "a": "The system should be partially controllable",
+        "b": "The system should be observable ",
         "c": "All states are measurable",
-        "d": "All poles must be lies on the left half of the s plane"
+        "d": "All poles must lie in the left half of the s-plane"
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
@@ -60,4 +60,3 @@
 	
   ]
 }
-
