@@ -15,7 +15,7 @@
     {
       "question": "Q2. What is the necessary condition for pole placement using state feedback design?",
       "answers": {
-        "a": "All poles must be lies on the left half of the s plane",
+        "a": "All poles must lie in the left half of the s plane",
         "b": "System should be controllable",
         "c": "System should be observable",
         "d": "Rank of the controllability matrix should be less than the order of the system"
