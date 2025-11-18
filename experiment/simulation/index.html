@@ -20,6 +20,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/adik.css" rel="stylesheet">
   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.js"></script>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -45,35 +47,7 @@
 
 
   <style>
-	.bluedot{
-	position:absolute;
-    border: 2px solid blue;
-    border-radius:50%;
-    background-color:blue;
-    background-image:linear-gradient(90deg,#0066ff,#00ccff);
-	box-shadow: 5px 5px 8px #888888;
-	}
-	.handlep{
-	position:absolute;
-    border: 2px solid blue;
-    border-radius:50%;
-    background-color:white;
-    background-image:url(./images/plus.png);
-	background-size:cover;
-	background-position:center;
-	
-	}
-	
-	.handlen{
-	position:absolute;
-    border: 2px solid blue;
-    border-radius:50%;
-    background-color:white;
-    background-image:url(./images/minus.jpg);
-	background-size:cover;
-	background-position:center;
-	
-	}
+
 	
 	canvas {	
 	max-width:100%;
@@ -99,6 +73,7 @@
   
   
 </head>
+
 
 <body><!--body tag start-->
     <div class="container p-3 my-3 text-primary text-center border"><!--First Container under body tag start-->
@@ -130,7 +105,6 @@
         
     </div><!--First Container under body tag end-->
     
-    
 	
     <div class="container p-3 my-5 text-left border"><!--3rd Container under body tag start-->
       <div class="row"><!--First row under 3rd container start-->
@@ -151,8 +125,15 @@
 					 
 					 <li> Click on the 'Rank' or 'Determinant'  or "Inference' or 'Gain Values' buttons to get the the controllability test information and gain values. </li><br/>
 
-					 	 
-					 <li> Click on 'Clear' button to enter the new parameter values of the system.</li><br/>
+					 <li> Click on the 'Type of Response' dropdown button to select the required response in the simulation. </li> <br/>
+					 
+					 <li> Enter the required values and click on the 'Closed Loop Response' button to generate the plot.</li><br/>
+					 
+					 <li> <b>Note:</b> Enter the initial position value between -10 m to +10 m and enter the initial angle value between -6 &deg; to +6 &deg; (as per the practical experiment point of view). Click on the "Plot" button.</li><br/>
+					 					 					 
+                     <li> Click on the 'Download' button to download the plot.</li>
+					 
+					 <li> Click on the 'Clear' button to enter new parameter values for the system.</li><br/>
 
 					
 						 
@@ -178,11 +159,11 @@
 			Enter the values of the following parameters: <br/><br/>
 			<!--<img class = "img-fluid" src="./images/Continuous_System.png" class="img-fluid" > <br/></br>-->
 			
-			<span style="position:absolute;left:33%">Mass of the cart :  <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">M</span> (kg)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="M1" min="0.1" value="0.5" max="1" step="0.05"  ></span><br/></br>
-			<span style="position:absolute;left:33%">Mass of the pendulum : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">m</span> (kg)</span><span style="position:absolute;left:63%;text-align:center"> = <input type="number" id="m1" min="0.1" value="0.2" max="1" step="0.05"  ></span><br/></br>
-			<span style="position:absolute;left:33%">Coefficient of friction for cart :  <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">b</span> (N/m/sec)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="bc" min="0.01" value="0.1" max="1" step="0.01"  ></span><br/></br>
-            <span style="position:absolute;left:33%">Length to pendulum center of mass : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">l</span> (m)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="l1" min="0.1" value="0.3" max="1" step="0.05" ></span><br/></br>	
-            <span style="position:absolute;left:33%">Mass moment of inertia of the pendulum : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">I</span> (kg.m<sup>2</sup>)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="I1" min="0.001" value="0.006" max="1" step="0.001" ></span><br/></br>
+			<span style="position:absolute;left:33%">Mass of the cart :  <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">M</span> (kg)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="M1" min="0.1" value="0.5" max="1" step="0.05" style="text-align:center"></span><br/></br>
+			<span style="position:absolute;left:33%">Mass of the pendulum : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">m</span> (kg)</span><span style="position:absolute;left:63%;text-align:center"> = <input type="number" id="m1" min="0.1" value="0.2" max="1" step="0.05"  style="text-align:center"></span><br/></br>
+			<span style="position:absolute;left:33%">Coefficient of friction for cart :  <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">b</span> (N/m/sec)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="bc" min="0.01" value="0.1" max="1" step="0.01"  style="text-align:center"></span><br/></br>
+            <span style="position:absolute;left:33%">Length to pendulum center of mass : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">l</span> (m)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="l1" min="0.1" value="0.3" max="1" step="0.05" style="text-align:center"></span><br/></br>	
+            <span style="position:absolute;left:33%">Mass moment of inertia of the pendulum : <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">I</span> (kg.m<sup>2</sup>)</span> <span style="position:absolute;left:63%;text-align:center">= <input type="number" id="I1" min="0.001" value="0.006" max="1" step="0.001" style="text-align:center"></span><br/></br>
             
 			
 			<div class="d-inline-flex">
@@ -254,10 +235,10 @@
 						
 			 <br/><br/>
 						
-			Pole 1 :  P1 = <input type="number" id="np1" min="-500" value="-1" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
-			Pole 2 :  P2 = <input type="number" id="np2" min="-500" value="-2" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
-			Pole 3 :  P3 = <input type="number" id="np3" min="-500" value="-3" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
-			Pole 4 :  P4 = <input type="number" id="np4" min="-500" value="-4" max="0" step="0.05" style="position:absolute;width:10%" ><br/></br>
+			Pole 1 :  P1 = <input type="number" id="np1" min="-500" value="-1" max="0" step="0.05" style="position:absolute;width:10%; text-align:center" ><br/></br>
+			Pole 2 :  P2 = <input type="number" id="np2" min="-500" value="-2" max="0" step="0.05" style="position:absolute;width:10%; text-align:center" ><br/></br>
+			Pole 3 :  P3 = <input type="number" id="np3" min="-500" value="-3" max="0" step="0.05" style="position:absolute;width:10%; text-align:center" ><br/></br>
+			Pole 4 :  P4 = <input type="number" id="np4" min="-500" value="-4" max="0" step="0.05" style="position:absolute;width:10%; text-align:center" ><br/></br>
 			
 						
 			<p id="Pole_Value1"/>
@@ -377,6 +358,9 @@
 			<button class="btn btn-success" onclick="showinfo()">Inference</button>
 				<span id="Cntrl_Test3" style="display:none"></span><br/><br/>
 			<button class="btn btn-success" onclick="GVc()">Gain Values </button>
+			
+			
+			
 				<span id="DChar_Eq" style="display:none"></span>
 				<span id="Desired_char" style="display:none"></span><br/>
 				<span id="Char_Eq" style="display:none"></span>
@@ -397,14 +381,35 @@
 				<p id="Pre-Compensator_Gain_Value"/>
 				
 				
-				
 		    <br/>
 
 			
 			<br/><br/>
 			</div>
+			<div id="plotBody" class="card" style="display:none;width:100%;min-width:1000px;background-color:none">
+			<br/>
+			<div class="card-title"><b>Simulation: </b></div><br/>
+			<div class="dropdown" id ="dp1">
+  <button class="btn btn-info dropdown-toggle" type="button" id="dB1" data-bs-toggle="dropdown" aria-expanded="false">
+    Type of Response
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dB1">
+    <li><a class="dropdown-item"  onclick="test1();">Initial Conditions</a></li>
+    <li><a class="dropdown-item"  onclick="test2();">Unit Step</a></li>
+	<li><a class="dropdown-item"  onclick="test3();">Unit Step with Initial Conditions</a></li>
+    </b></br>
+  </ul>
+</div>
+			<span class="card-text" id="IV" style="display:none">Enter the initial values:</span></br>
+			<span class="card-text" id="IP" style="display:none">Position (m):&nbsp;&nbsp;<input type="number" id="initPos" min="-10" max="10" value="0" style="width:10%;text-align:center"></span><br/>
+			    
+			<span class="card-text" id="IA" style="display:none">Angle (&theta; &deg;):&nbsp;&nbsp;<input type="number" id="initAngle" min="-6" max="6" value="1" style="width:10%;text-align:center"></span><br/> 
 			
+			<span class="card-text" id="US0" style="display:none">Step Value :&nbsp;&nbsp;<input type="number" value="0" style="width:10%;text-align:center" readonly=readonly></span><br/>
+			<span class="card-text" id="US1" style="display:none">Step Value :&nbsp;&nbsp;<input type="number" value="1" style="width:10%;text-align:center" readonly=readonly></span><br/>
 			
+			<button class="btn btn-success" id ="plotA" onclick="plot()" style="visibility:hidden">Closed Loop Response</button><br/><br/>
+			</div>
 			
 			<!--<div id="tfbody4" class="card" style="display:none;width:100%;min-width:1000px;background-color:none">
 			<br/>	
@@ -448,21 +453,22 @@
 	 
 			<div class="col-md-12">
 				<!--img id = "0.3fr" src="./images/plant.png" class="img-fluid" style="display:none">-->
-				<div id = "plotbucket" class="content-center " style="display:none; position:relative; border:3px solid white;height:530px;width:823px ">
+				<div id = "plotbucket" class="content-center " style="display:none; position:relative; border:3px solid white;height:500px;width:1000px ">
 				
 				<!--<button type="button" id="exportChart2" class="btn btn-primary"  style="display:none;position:absolute;top:210%;left:28%;">Download Plot</button>-->
 				
-					<div id="chartContainer1"  style="display:none; position:absolute; height:35%; width:88%;z-index:1 "></div>
-					<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-					<div id="chartContainer2"  style="display:none; position:absolute; height:30%; width:88%;z-index:1 "></div>
+					<div id="chartContainer1"  style="display:none; position:absolute; height:50%; width:100%;z-index:1 "></div>
+					<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+					<div id="chartContainer2"  style="display:none; position:absolute; height:50%; width:100%;z-index:1 "></div>
 				
 				</div>
 				<!--<button type="button" id="exportChart" class="btn btn-primary"  >Download Plot</button>-->
+				<button type="button" id="exportChart" class="btn btn-primary" onclick="saveImg()" style="display:none;">Download Plot</button>
 			</div>
 			
 			
 		
-	</div>	
+	</div>		
 
 	
 	
@@ -491,3 +497,5 @@
 	
 </body><!--body tag end-->
 </html><!--html tag end-->
+
+
