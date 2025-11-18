@@ -23,9 +23,52 @@ dataOPPoints1=[];
  location.reload();
 //document.getElementById('0.3fr').style.display = "none";
 
-
-
 }
+
+///with initial conditions
+function test1(){
+	document.getElementById("dB1").innerHTML ="Initial Conditions";
+	document.getElementById('IV').style.display = "block";
+	document.getElementById('IP').style.display = "block";
+	document.getElementById('IA').style.display = "block";
+	document.getElementById('plotA').style.visibility = "visible";
+	document.getElementById('US0').style.display = "block";
+	document.getElementById('US1').style.display = "none";
+	test1F = true;
+	test2F = false;
+	test3F = false;
+}
+
+///step response
+function test2(){
+	document.getElementById("dB1").innerHTML ="Unit Step Response";
+	document.getElementById('IV').style.display = "none";
+	document.getElementById('IP').style.display = "none";
+	document.getElementById('IA').style.display = "none";
+	document.getElementById('plotA').style.visibility = "visible";
+	document.getElementById('US1').style.display = "block";
+	document.getElementById('US0').style.display = "none";
+	test1F = false;
+	test2F = true;
+	test3F = false;
+}
+
+///step response with initial conditions
+function test3(){
+	document.getElementById("dB1").innerHTML ="Unit Step Response with Initial Conditions";
+	document.getElementById('IV').style.display = "block";
+	document.getElementById('IP').style.display = "block";
+	document.getElementById('IA').style.display = "block";
+	document.getElementById('plotA').style.visibility = "visible";
+	document.getElementById('US1').style.display = "block";
+	document.getElementById('US0').style.display = "none";
+	test1F = false;
+	test2F = false;
+	test3F = true;
+}
+
+
+/////////////////////////////////////////////////////////////PLOTTING SEGMENT WITH MAIN FUNCTIONS////////////////////////////////////////////////////////
 
 var dataOPPoints=[];	///for plotting chart
 var dataOPPoints1=[];
@@ -502,10 +545,10 @@ function SFG(){
 			   var cont = [  math.add(p1,p2,p3,p4,a22), math.add(p12,p13,p14,p23,p24,p34,a43),math.add(p123,p124,p134,p234,math.multiply(a23,a42),-math.multiply(a22,a43)),p1p2p3p4 ];
 			   var sol = math.lusolve(coeff,cont);
 			   
-			   var k1 = math.divide(math.round(math.multiply(sol[0][0],1000)),1000);
-			   var k2 = math.divide(math.round(math.multiply(sol[1][0],1000)),1000);
-			   var k3 = math.divide(math.round(math.multiply(sol[2][0],1000)),1000);
-			   var k4 = math.divide(math.round(math.multiply(sol[3][0],1000)),1000);
+			   var k1 = math.divide(math.round(math.multiply(sol[0][0],1000000)),1000000);
+			   var k2 = math.divide(math.round(math.multiply(sol[1][0],1000000)),1000000);
+			   var k3 = math.divide(math.round(math.multiply(sol[2][0],1000000)),1000000);
+			   var k4 = math.divide(math.round(math.multiply(sol[3][0],1000000)),1000000);
 			   
 			   console.log(k1);
 			   console.log(k2);
@@ -539,7 +582,7 @@ function SFG(){
 			   var iABK = math.inv(ABK);
 			   var CABKB = math.multiply(mC1,iABK,mB);
 			   
-			   var N = math.divide(math.round(math.multiply(math.divide(-1,CABKB),1000)),1000);
+			   var N = math.divide(math.round(math.multiply(math.divide(-1,CABKB),1000000)),1000000);
 			   
 			   console.log(N);
 			   
@@ -579,6 +622,7 @@ function SFG(){
 			   
 			   document.getElementById('Feedback_gain_Value_K').innerHTML = ' Feedback Gain Values K =['+ k1+',\t'+k2+',\t'+k3+',\t'+k4+']';
 			   document.getElementById('Pre-Compensator_Gain_Value').innerHTML = ' Pre-compensator Gain Value N =['+ Nb+']';
+			   
 			   
 			}
 			   else 
@@ -623,6 +667,1654 @@ document.getElementById("Char_Eq").style.display="block";
 document.getElementById("Closed_loop_char").style.display="block";
 document.getElementById("Feedback_gain_Value_K").style.display="block";
 document.getElementById("Pre-Compensator_Gain_Value").style.display="block";
+document.getElementById("plotBody").style.display = "block";
 }
 
 
+function plotSSM(){
+
+		var dataOPPoints1=[];	///for plotting chart with Pre Compensator (Nb)
+        var dataOPPoints2=[];
+		
+		
+		var dataOPPoints3=[];	///for plotting chart without Pre Compensator (Nb)
+        var dataOPPoints4=[]; 
+	
+	if(document.getElementById('initAngle').value <=6 && document.getElementById('initAngle').value >=-6 && document.getElementById('initPos').value <=10 && document.getElementById('initPos').value >=-10){
+            var M = document.getElementById('M1').value;			
+			var m = document.getElementById('m1').value;
+			var b = document.getElementById('bc').value;
+            var l = document.getElementById('l1').value;
+			var I = document.getElementById('I1').value;
+			
+			var P1 = document.getElementById('np1').value;			
+			var P2 = document.getElementById('np2').value;
+			var P3 = document.getElementById('np3').value;
+            var P4 = document.getElementById('np4').value;
+			
+			var p1=-P1;
+			var p2=-P2;
+			var p3=-P3;
+			var p4=-P4;
+						
+	        //var T = document.getElementById('Ts').value;
+						
+			var g=9.8;
+			
+			var den=math.add(math.multiply(I,math.add(M,m)),math.multiply(M,m,l,l));
+			
+		    var a22=math.divide(math.round(math.multiply(math.divide(-math.multiply(math.add(I,math.multiply(m,l,l)),b),den),1000)),1000);
+			
+			var a23=math.divide(math.round(math.multiply(math.divide(math.multiply(m,m,g,l,l),den),1000)),1000);;
+			var b2=math.divide(math.round(math.multiply(math.divide(math.add(I,math.multiply(m,l,l)),den),1000)),1000);;
+			
+			var a42=math.divide(math.round(math.multiply(math.divide(-math.multiply(m,l,b),den),1000)),1000);;
+			var a43=math.divide(math.round(math.multiply(math.divide(math.add(math.multiply(m,g,l,M),math.multiply(m,g,l,m)),den),1000)),1000);;
+			var b4=math.divide(math.round(math.multiply(math.divide(math.multiply(m,l),den),1000)),1000);;
+			
+			var a11=a13=a14=a21=a24=a31=a32=a33=a41=a44=b1=b3=c12=c13=c14=c21=c22=c24=0;
+			var a12=a34=c11=c23=1;
+			
+			var mA = math.matrix([[a11, a12, a13, a14], [a21, a22, a23, a24], [a31, a32, a33, a34], [a41, a42, a43, a44]]);
+            var mC1 = math.matrix([[c11, c12, c13, c14]]);
+			var mB = math.matrix([[b1], [b2], [b3], [b4]]);
+			
+			var aa11= a11*a11+a12*a21+a13*a31+a14*a41;
+			var aa12= a11*a12+a12*a22+a13*a32+a14*a42;
+			var aa13= a11*a13+a12*a23+a13*a33+a14*a43;
+			var aa14= a11*a14+a12*a24+a13*a34+a14*a44;
+		
+			var aa21= a21*a11 +a22*a21 +a23*a31 +a24*a41;
+			var aa22= a21*a12 +a22*a22 +a23*a32 +a24*a42;
+			var aa23= a21*a13 +a22*a23 +a23*a33 +a24*a43;
+			var aa24= a21*a14 +a22*a24 +a23*a34 +a24*a44;
+			
+			var aa31= a31*a11 +a32*a21 +a33*a31 +a34*a41;
+			var aa32= a31*a12 +a32*a22 +a33*a32 +a34*a42;
+			var aa33= a31*a13 +a32*a23 +a33*a33 +a34*a43;
+			var aa34= a31*a14 +a32*a24 +a33*a34 +a34*a44;
+			
+			var aa41= a41*a11 +a42*a21 +a43*a31 +a44*a41;
+			var aa42= a41*a12 +a42*a22 +a43*a32 +a44*a42;
+			var aa43= a41*a13 +a42*a23 +a43*a33 +a44*a43;
+			var aa44= a41*a14 +a42*a24 +a43*a34 +a44*a44;
+			
+			///////////////////////////////////////////
+			
+			var aaa11= a11*aa11+a12*aa21+a13*aa31+a14*aa41;
+			var aaa12= a11*aa12+a12*aa22+a13*aa32+a14*aa42;
+			var aaa13= a11*aa13+a12*aa23+a13*aa33+a14*aa43;
+			var aaa14= a11*aa14+a12*aa24+a13*aa34+a14*aa44;
+		
+			var aaa21= a21*aa11 +a22*aa21 +a23*aa31 +a24*aa41;
+			var aaa22= a21*aa12 +a22*aa22 +a23*aa32 +a24*aa42;
+			var aaa23= a21*aa13 +a22*aa23 +a23*aa33 +a24*aa43;
+			var aaa24= a21*aa14 +a22*aa24 +a23*aa34 +a24*aa44;
+			
+			var aaa31= a31*aa11 +a32*aa21 +a33*aa31 +a34*aa41;
+			var aaa32= a31*aa12 +a32*aa22 +a33*aa32 +a34*aa42;
+			var aaa33= a31*aa13 +a32*aa23 +a33*aa33 +a34*aa43;
+			var aaa34= a31*aa14 +a32*aa24 +a33*aa34 +a34*aa44;
+			
+			var aaa41= a41*aa11 +a42*aa21 +a43*aa31 +a44*aa41;
+			var aaa42= a41*aa12 +a42*aa22 +a43*aa32 +a44*aa42;
+			var aaa43= a41*aa13 +a42*aa23 +a43*aa33 +a44*aa43;
+			var aaa44= a41*aa14 +a42*aa24 +a43*aa34 +a44*aa44;
+			
+			//////////////////////////////////////////////
+			
+			var ab1= math.divide(math.round(math.multiply(b1*a11 +b2*a12 +b3*a13 +b4*a14,1000)),1000);
+			var ab2= math.divide(math.round(math.multiply(b1*a21 +b2*a22 +b3*a23 +b4*a24,1000)),1000);
+			var ab3= math.divide(math.round(math.multiply(b1*a31 +b2*a32 +b3*a33 +b4*a34,1000)),1000);
+			var ab4= math.divide(math.round(math.multiply(b1*a41 +b2*a42 +b3*a43 +b4*a44,1000)),1000);
+			
+			////////////////////////////////////////////////
+			
+			var aab1= math.divide(math.round(math.multiply(b1*aa11 +b2*aa12 +b3*aa13 +b4*aa14,1000)),1000);
+			var aab2= math.divide(math.round(math.multiply(b1*aa21 +b2*aa22 +b3*aa23 +b4*aa24,1000)),1000);
+			var aab3= math.divide(math.round(math.multiply(b1*aa31 +b2*aa32 +b3*aa33 +b4*aa34,1000)),1000);
+			var aab4= math.divide(math.round(math.multiply(b1*aa41 +b2*aa42 +b3*aa43 +b4*aa44,1000)),1000);
+			
+			/////////////////////////////////////////////
+			
+			var aaab1= math.divide(math.round(math.multiply(b1*aaa11 +b2*aaa12 +b3*aaa13 +b4*aaa14,1000)),1000);
+			var aaab2= math.divide(math.round(math.multiply(b1*aaa21 +b2*aaa22 +b3*aaa23 +b4*aaa24,1000)),1000);
+			var aaab3= math.divide(math.round(math.multiply(b1*aaa31 +b2*aaa32 +b3*aaa33 +b4*aaa34,1000)),1000);
+			var aaab4= math.divide(math.round(math.multiply(b1*aaa41 +b2*aaa42 +b3*aaa43 +b4*aaa44,1000)),1000);
+			
+			//////////////////////////////////////////////
+			var B= math.matrix([b1, b2, b3, b4]);
+			var AB= math.matrix([ab1,ab2, ab3, ab4]);
+			var AAB= math.matrix([aab1, aab2, aab3, aab4]);
+			var AAAB= math.matrix([aaab1, aaab2, aaab3, aaab4]);
+			
+			/* document.getElementById('matQcB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px">B</span> ='+ B;
+			document.getElementById('matQcAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> AB</span> ='+ AB;
+			document.getElementById('matQcAAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A<sup>2</sup>B</span> ='+ AAB;
+			document.getElementById('matQcAAAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A<sup>3</sup>B</span> ='+ AAAB; */
+			
+			//var Qc1= math.matrix([[0, 1.818, -0.331, 12.209], [1.818, -0.331, 12.209, -4.433], [0, 4.545, -0.827, 141.873], [4.545, -0.827, 141.873, -31.349]]);
+			//var DQc1=math.det(Qc1);
+			//console.log(DQc1);
+			
+			var Qc= math.matrix([[b1, ab1, aab1, aaab1],[b2, ab2, aab2, aaab2],[b3, ab3, aab3, aaab3],[b4, ab4, aab4, aaab4]]);
+			
+			document.getElementById('matQc').innerHTML = ' <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">Q<sub>c</sub></span> =['+ b1+',\t'+ab1+',\t'+aab1+',\t'+aaab1+';\t\t'+b2+','+ab2+',\t'+aab2+',\t'+aaab2+';\t\t'+b3+',\t'+ab3+',\t'+aab3+',\t'+aaab3+';\t\t'+b4+',\t'+ab4+',\t'+aab4+',\t'+aaab4+']'
+			
+			var DQc= math.divide(math.round(math.multiply(math.det(Qc),1000)),1000);
+			
+			console.log(DQc);
+			//document.getElementById('RQc').value = 4;
+			//DQc=0;
+			
+			if (DQc!=0)
+			{  Cntrl_Test1=" Rank is 4";			   
+			   Cntrl_Test2=" Determinent is" +'\t' + DQc;				    
+			   Cntrl_Test3=" System is completely controllable";
+			   document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
+			   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
+			   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
+			   
+			   var p1p2p3p4 = math.multiply(p1,p2,p3,p4);
+			  /*  var a23b4 = math.multiply(a23,b4);
+			   var a43b2 = math.multiply(a43,b2);
+			   
+			   //var k1 = math.divide(p1p2p3p4, math.add(a23b4,-a43b2));
+			   
+			   var k1=math.divide(math.round(math.multiply(math.divide(p1p2p3p4, math.add(a23b4,-a43b2)),1000)),1000);
+			   
+			   var k2 = math.divide(math.round(math.multiply(math.divide(math.add(p1,p2,p3,p4,a22),b2),1000)),1000); */
+			   
+			   var p123 = math.multiply(p1,p2,p3);
+			   var p124 = math.multiply(p1,p2,p4);
+			   var p234 = math.multiply(p2,p3,p4);
+			   var p134 = math.multiply(p1,p3,p4);
+			   
+			   /* var a42a23 = math.multiply(a42,a23);
+			   var a43b2k2 = math.multiply(a43,b2,k2);
+			   var a22a43 = math.multiply(a22,a43);
+			   var a23b4k2 = math.multiply(a23,b4,k2);
+			   
+			   var num3 = math.add(p123,p124,p234,p134,a42a23,a43b2k2,-a22a43,-a23b4k2);
+			   
+			   var a42b2 = math.multiply(a42,b2);
+			   var b2b4k2 = math.multiply(b2,b4,k2);
+			   var a22b4 = math.multiply(a22,b4);
+			   
+			   var den3 = math.add(a42b2,b2b4k2,-a22b4,b2b4k2);
+		   
+			   var k3 = math.divide(math.round(math.multiply(math.divide(num3,den3),1000)),1000); */
+			   
+			   var p12 = math.multiply(p1,p2);
+			   var p13 = math.multiply(p1,p3);
+			   var p14 = math.multiply(p1,p4);
+			   var p23 = math.multiply(p2,p3);
+			   var p24 = math.multiply(p2,p4);
+			   var p34 = math.multiply(p3,p4);
+			   
+			  /*  var b4k2 = math.multiply(b4,k2);
+			   var b2k1 = math.multiply(b2,k1);
+			   
+			   var num4 = math.add(p12,p13,p14,p23,p24,p34,a43,-b4k2,-b2k1);
+			   var den4 = math.add(a42b2,-b2b4k2);
+			   
+			   var k4 = math.divide(math.round(math.multiply(math.divide(num4,den4),1000)),1000); */
+			   
+			   var coeff = [ [0,b2,0,b4],[b2,0,b4, math.add(math.multiply(a42,b2),-math.multiply(a22,b4))],[0,math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),math.add(math.multiply(a42,b2),-math.multiply(a22,b4)),0],[math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),0,0,0] ];
+			   var cont = [  math.add(p1,p2,p3,p4,a22), math.add(p12,p13,p14,p23,p24,p34,a43),math.add(p123,p124,p134,p234,math.multiply(a23,a42),-math.multiply(a22,a43)),p1p2p3p4 ];
+			   var sol = math.lusolve(coeff,cont);
+			   
+			   var k1 = math.divide(math.round(math.multiply(sol[0][0],1000000)),1000000);
+			   var k2 = math.divide(math.round(math.multiply(sol[1][0],1000000)),1000000);
+			   var k3 = math.divide(math.round(math.multiply(sol[2][0],1000000)),1000000);
+			   var k4 = math.divide(math.round(math.multiply(sol[3][0],1000000)),1000000);
+			   
+			   console.log(k1);
+			   console.log(k2);
+			   console.log(k3);
+			   console.log(k4);
+			   
+			  /* K1="Feedback gain k1 = " +k1+ "";
+			   
+			   document.getElementById("Feedback_gain_Value1").innerHTML=K1;
+			   
+			   K2="Feedback gain k2 = " +k2+ "";
+			   
+			   document.getElementById("Feedback_gain_Value2").innerHTML=K2;
+			   
+			   K3="Feedback gain k3 = " +k3+ "";
+			   
+			   document.getElementById("Feedback_gain_Value3").innerHTML=K3;
+			   
+			   
+			   K4="Feedback gain k4 = " +k4+ "";
+			   
+			   document.getElementById("Feedback_gain_Value4").innerHTML=K4; */
+			   
+			   var K = math.matrix([[ k1, k2, k3, k4]]);
+			   
+			   console.log(K);
+			   
+			   //var ABK = math.add(mA,-math.multiply(mB,K));
+			   var ABK = math.matrix([[a11, a12, a13, a14], [-math.multiply(b2,k1), math.add(a22,-math.multiply(b2,k2)), math.add(a23,-math.multiply(b2,k3)), -math.multiply(b2,k4)], [a31, a32, a33, a34], [-math.multiply(b4,k1), math.add(a42,-math.multiply(b4,k2)), math.add(a43,-math.multiply(b4,k3)), -math.multiply(b4,k4)]]);;
+			   console.log(ABK);
+			   var iABK = math.inv(ABK);
+			   var CABKB = math.multiply(mC1,iABK,mB);
+			   
+			   var N = math.divide(math.round(math.multiply(math.divide(-1,CABKB),1000000)),1000000);
+			   
+			   console.log(N);
+			   var Nb = N._data[0];
+			  // Kfb="Feedback gain K = " +K+ "";
+			   
+			   //document.getElementById("Feedback_gain_Value_K").innerHTML=Kfb;
+			   
+			   //outputText2=" b<sub>0</sub>="+b0+";  b<sub>1</sub>="+b1+"; b<sub>2</sub>="+b2+ "; a<sub>0</sub>="+a0+";  a<sub>1</sub>="+a1+";  a<sub>2</sub>="+a2+ "";
+			   
+			   
+			var maxt = 100;
+	        var mint = 0;
+	
+		
+            var yop = new Array();	///continous data output result storing
+	        var Cposi = []; //with Nb
+	        var Aposi = [];
+			
+			var Cposi1 = [];//without Nb
+	        var Aposi1 = []; 
+			
+			var dt =0.01;
+	
+	        //var x1_ini = 0;
+	       // var x2_ini = 0;
+		   
+		   var Pos = $("#initPos").val();
+		   
+	        var x = math.number(Pos);// with Nb
+			var x_dot = 0;
+			var x_ddot = 0;
+			
+			
+			var x1 = math.number(Pos);// without Nb//0;
+			var x_dot1 = 0;
+			var x_ddot1=0; //without Nb 
+			
+			
+			var Tdeg = $("#initAngle").val();
+			
+	        var theta = math.number(Tdeg);//math.multiply(Tdeg,math.divide(180,math.pi));//deg to rad
+			var theta_dot = 0;
+	        var theta_ddot = 0;
+			
+		 	var theta1 = math.number(Tdeg);//math.multiply(Tdeg,math.divide(180,math.pi));//deg to rad
+			var theta_dot1 = 0;
+			var theta_ddot1 = 0; //without Nb
+			 
+			/* var x1_up1 = 1;
+	        var x2_up1 = 0;
+			var x3_up1 = 0;
+	        var x4_up1 = 0; */
+			
+			var y1_up = 0;
+			var y2_up = 0;
+			
+			var va=1;//1;
+	
+           	var	t = mint;
+          	while(t<=maxt){
+        	//for(var f=minf;f<=maxf;f++){
+	        
+			/* console.log(x1_up1);
+			console.log(x2_up1);
+			console.log(x3_up1);
+			console.log(x4_up1); */
+			
+			console.log(a11);
+			console.log(a12);
+			console.log(a13);
+			console.log(a14);
+			
+			console.log(a21);
+			console.log(a22);
+			console.log(a23);
+			console.log(a24);
+			
+			console.log(a31);
+			console.log(a32);
+			console.log(a33);
+			console.log(a34);
+			
+			console.log(a41);
+			console.log(a42);
+			console.log(a43);
+			console.log(a44);
+			
+			console.log(b1);
+			console.log(b2);
+			console.log(b3);
+			console.log(b4);
+			
+			console.log(c11);
+			console.log(c12);
+			console.log(c13);
+			console.log(c14);
+			
+			console.log(c21);
+			console.log(c22);
+			console.log(c23);
+			console.log(c24);
+			
+			console.log(k1);
+			console.log(k2);
+			console.log(k3);
+			console.log(k4);
+			
+			Cposi[t] = x;//y1_up;
+			dataOPPoints1.push({x:(t), y:(Cposi[t])});///displacement part with Nb
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi[t] = theta;//y2_up;
+			dataOPPoints2.push({x:(t), y:(Aposi[t])});///Angle part with Nb
+	        //dArray2 = dataOPPoints2;
+			
+			Cposi1[t] = x1;//y1_up;
+			dataOPPoints3.push({x:(t), y:(Cposi1[t])});///displacement part without Nb
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi1[t] = theta1;//y2_up;
+			dataOPPoints4.push({x:(t), y:(Aposi1[t])});///Angle part without Nb
+	        //dArray2 = dataOPPoints2;
+			 
+		    /* x1_up = math.add(math.multiply(math.add(ad11,-math.multiply(bd1,k1)),x1_up1),math.multiply(math.add(ad12,-math.multiply(bd1,k2)),x2_up1));//,math.multiply(bd1,va));
+			x2_up = math.add(math.multiply(math.add(ad21,-math.multiply(bd2,k1)),x1_up1),math.multiply(math.add(ad22,-math.multiply(bd2,k2)),x2_up1));//,math.multiply(bd2,va));
+			 */
+			
+			//with Nb
+			x_dot = x_dot;
+			
+			/* x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot));
+			 */ 
+			 
+			 x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot),math.multiply(b2,Nb,va));
+			
+			 //without Nb
+			 
+			 x_dot1 = x_dot1;
+			
+			/* x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot));
+			 */ 
+			 
+			x_ddot1 = math.add(math.multiply(-b2,k1,x1),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot1),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta1),-math.multiply(b2,k4,theta_dot1),math.multiply(b2,va));
+			
+			  
+			//with nb
+			
+			//x_ddot = math.add(math.multiply(a22,x_dot),math.multiply(a23,theta),math.multiply(b2,va));
+			
+			theta_dot = theta_dot;
+			
+			/* theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot));
+			  */
+			  
+			 theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot),math.multiply(b4,Nb,va));
+			 
+			 //without Nb
+			 
+			 theta_dot1 = theta_dot1;
+			
+			// theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot));
+			  
+			  
+			theta_ddot1 = math.add(math.multiply(-b4,k1,x1),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot1),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta1),-math.multiply(b4,k4,theta_dot1),math.multiply(b4,va));
+			 
+			  
+			
+			//theta_ddot = math.add(math.multiply(a42,x_dot),math.multiply(a43,theta),math.multiply(b4,va));
+			
+			  x_dot += x_ddot * dt;
+			  x += (x_dot * dt );
+			  theta_dot += theta_ddot * dt;
+			  theta += (theta_dot * dt);
+			  
+			  //without Nb
+			  
+			   x_dot1 += x_ddot1 * dt;
+			  x1 += (x_dot1 * dt );
+			  theta_dot1 += theta_ddot1 * dt;
+			  theta1 += (theta_dot1 * dt); 
+			
+			console.log("theta ="+theta);
+			
+			Cposi[t] = x;//y1_up;
+			dataOPPoints1.push({x:(t), y:(Cposi[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi[t] = theta;//y2_up;
+			dataOPPoints2.push({x:(t), y:(Aposi[t])});///Angle part
+			
+			
+			//without Nb
+			
+			Cposi1[t] = x1;//y1_up;
+			dataOPPoints3.push({x:(t), y:(Cposi1[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi1[t] = theta1;//y2_up;
+			dataOPPoints4.push({x:(t), y:(Aposi1[t])});///Angle part
+			 
+			 
+	  /* x_dot += x_ddot * dt;
+      x += (x_dot * dt );
+      theta_dot += theta_ddot * dt;
+      theta += (theta_dot * dt); */
+			 
+			 
+			 /* 
+			 x1_up1 = x1_up ;
+	         x2_up1 = x2_up ;
+             x3_up1 = x3_up ;
+	         x4_up1 = x4_up ;			 
+			
+			
+			console.log(x1_up);
+			console.log(x2_up);
+			console.log(x3_up);
+			console.log(x4_up); */
+			
+			
+		    /* disp[t] = x1_up;//y1_up;
+			dataOPPoints1.push({x:(t), y:(disp[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			vel[t] = x2_up;//y2_up;
+			dataOPPoints2.push({x:(t), y:(vel[t])});///velocity part
+	        //dArray1 = dataOPPoints2; */
+			
+			t=math.add(t,dt);
+			}
+			
+			document.getElementById('plotbucket').style.display  = "block"; 
+ 
+document.getElementById('chartContainer1').style.display  = "block"; 	
+	var chart1 = new CanvasJS.Chart("chartContainer1",
+    {
+      animationEnabled: true,
+	  zoomEnabled:true,
+	  zoomType: "xy",
+		  animationDuration: 10000, 
+	  title:{
+      text: "Response (Cart Position vs. time) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#dddbdb",
+        title: "Time",
+		//logarithmic:true,
+		maximum:maxt,
+		minimum:mint,
+      },
+    axisY:[ 
+	      {/////output Y axis
+		  //logarithmic: true,
+            title: "Cart Position (m)",
+			
+			//maximum:1,
+        },
+		{
+			gridThickness: 0, 
+			tickLength:0, 
+			lineThickness:0
+			} 
+		],
+	data:[ 
+      {        
+        type: "spline",
+		color:"#ed2c4e",
+        dataPoints:dataOPPoints1
+	
+       },
+	    {        
+        type: "spline",
+		color:"black",
+        dataPoints:dataOPPoints3
+	
+       }, 
+	   
+	   
+	   ]
+       
+	});
+
+	chart1.render();	
+	//document.getElementById("exportChart").style.display = "block";
+	
+document.getElementById('chartContainer2').style.display  = "block"; 	
+	var chart2 = new CanvasJS.Chart("chartContainer2",
+    {
+      animationEnabled: true,
+	  zoomEnabled:true,
+	  zoomType: "xy",
+		  animationDuration: 10000, 
+	  title:{
+      text: " Response (Angular Position vs Time) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#dddbdb",
+        title: "Time",
+		//logarithmic:true,
+		maximum:maxt,
+		minimum:mint,
+      },
+    axisY:[ 
+	      {/////output Y axis
+		  //logarithmic: true,
+            title: "Angular Position (degree)",
+			
+			///maximum:0.3,
+        },
+		{
+			gridThickness: 0, 
+			tickLength:0, 
+			lineThickness:0
+			} 
+		
+		],
+	data:[ 
+      {        
+        type: "spline",
+		color:"red",
+        dataPoints:dataOPPoints2,		
+		showInLegend:true,
+		legendText:"With Nb"
+	
+       },
+	    {        
+        type: "spline",
+		color:"black",
+        dataPoints:dataOPPoints4,
+		showInLegend:true,
+		legendText:"Without Nb"
+	
+       },
+	   
+	   ]
+       
+	});
+
+	chart2.render();
+	document.getElementById("exportChart").style.display = "block";
+	/* if(isPlotted1==true && isPlotted2==true){
+		document.getElementById('CompB').style.visibility = "visible";
+	} */
+			   
+			   
+			   
+			   
+			}
+			   else 
+			   {   Cntrl_Test1=" Rank < n = 4";
+		           Cntrl_Test2="Determinent is" + "" + DQc + "";		
+			       Cntrl_Test3=" System is not controllable";
+			       document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
+				   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
+				   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
+			   }
+			   
+			}
+else{
+	
+	alert('Enter initial position and initial angle values within the range as per the given instructions');
+}			
+			
+		
+			
+}
+
+////initial condition only
+function plotIC(){
+
+		var dataOPPoints1=[];	///for plotting chart with Pre Compensator (Nb)
+        var dataOPPoints2=[];
+		
+	if(document.getElementById('initAngle').value <=6 && document.getElementById('initAngle').value >=-6 && document.getElementById('initPos').value <=10 && document.getElementById('initPos').value >=-10){
+            var M = document.getElementById('M1').value;			
+			var m = document.getElementById('m1').value;
+			var b = document.getElementById('bc').value;
+            var l = document.getElementById('l1').value;
+			var I = document.getElementById('I1').value;
+			
+			var P1 = document.getElementById('np1').value;			
+			var P2 = document.getElementById('np2').value;
+			var P3 = document.getElementById('np3').value;
+            var P4 = document.getElementById('np4').value;
+			
+			var p1=-P1;
+			var p2=-P2;
+			var p3=-P3;
+			var p4=-P4;
+						
+	        //var T = document.getElementById('Ts').value;
+						
+			var g=9.8;
+			
+			var den=math.add(math.multiply(I,math.add(M,m)),math.multiply(M,m,l,l));
+			
+		    var a22=math.divide(math.round(math.multiply(math.divide(-math.multiply(math.add(I,math.multiply(m,l,l)),b),den),1000)),1000);
+			
+			var a23=math.divide(math.round(math.multiply(math.divide(math.multiply(m,m,g,l,l),den),1000)),1000);;
+			var b2=math.divide(math.round(math.multiply(math.divide(math.add(I,math.multiply(m,l,l)),den),1000)),1000);;
+			
+			var a42=math.divide(math.round(math.multiply(math.divide(-math.multiply(m,l,b),den),1000)),1000);;
+			var a43=math.divide(math.round(math.multiply(math.divide(math.add(math.multiply(m,g,l,M),math.multiply(m,g,l,m)),den),1000)),1000);;
+			var b4=math.divide(math.round(math.multiply(math.divide(math.multiply(m,l),den),1000)),1000);;
+			
+			var a11=a13=a14=a21=a24=a31=a32=a33=a41=a44=b1=b3=c12=c13=c14=c21=c22=c24=0;
+			var a12=a34=c11=c23=1;
+			
+			var mA = math.matrix([[a11, a12, a13, a14], [a21, a22, a23, a24], [a31, a32, a33, a34], [a41, a42, a43, a44]]);
+            var mC1 = math.matrix([[c11, c12, c13, c14]]);
+			var mB = math.matrix([[b1], [b2], [b3], [b4]]);
+			
+			var aa11= a11*a11+a12*a21+a13*a31+a14*a41;
+			var aa12= a11*a12+a12*a22+a13*a32+a14*a42;
+			var aa13= a11*a13+a12*a23+a13*a33+a14*a43;
+			var aa14= a11*a14+a12*a24+a13*a34+a14*a44;
+		
+			var aa21= a21*a11 +a22*a21 +a23*a31 +a24*a41;
+			var aa22= a21*a12 +a22*a22 +a23*a32 +a24*a42;
+			var aa23= a21*a13 +a22*a23 +a23*a33 +a24*a43;
+			var aa24= a21*a14 +a22*a24 +a23*a34 +a24*a44;
+			
+			var aa31= a31*a11 +a32*a21 +a33*a31 +a34*a41;
+			var aa32= a31*a12 +a32*a22 +a33*a32 +a34*a42;
+			var aa33= a31*a13 +a32*a23 +a33*a33 +a34*a43;
+			var aa34= a31*a14 +a32*a24 +a33*a34 +a34*a44;
+			
+			var aa41= a41*a11 +a42*a21 +a43*a31 +a44*a41;
+			var aa42= a41*a12 +a42*a22 +a43*a32 +a44*a42;
+			var aa43= a41*a13 +a42*a23 +a43*a33 +a44*a43;
+			var aa44= a41*a14 +a42*a24 +a43*a34 +a44*a44;
+			
+			///////////////////////////////////////////
+			
+			var aaa11= a11*aa11+a12*aa21+a13*aa31+a14*aa41;
+			var aaa12= a11*aa12+a12*aa22+a13*aa32+a14*aa42;
+			var aaa13= a11*aa13+a12*aa23+a13*aa33+a14*aa43;
+			var aaa14= a11*aa14+a12*aa24+a13*aa34+a14*aa44;
+		
+			var aaa21= a21*aa11 +a22*aa21 +a23*aa31 +a24*aa41;
+			var aaa22= a21*aa12 +a22*aa22 +a23*aa32 +a24*aa42;
+			var aaa23= a21*aa13 +a22*aa23 +a23*aa33 +a24*aa43;
+			var aaa24= a21*aa14 +a22*aa24 +a23*aa34 +a24*aa44;
+			
+			var aaa31= a31*aa11 +a32*aa21 +a33*aa31 +a34*aa41;
+			var aaa32= a31*aa12 +a32*aa22 +a33*aa32 +a34*aa42;
+			var aaa33= a31*aa13 +a32*aa23 +a33*aa33 +a34*aa43;
+			var aaa34= a31*aa14 +a32*aa24 +a33*aa34 +a34*aa44;
+			
+			var aaa41= a41*aa11 +a42*aa21 +a43*aa31 +a44*aa41;
+			var aaa42= a41*aa12 +a42*aa22 +a43*aa32 +a44*aa42;
+			var aaa43= a41*aa13 +a42*aa23 +a43*aa33 +a44*aa43;
+			var aaa44= a41*aa14 +a42*aa24 +a43*aa34 +a44*aa44;
+			
+			//////////////////////////////////////////////
+			
+			var ab1= math.divide(math.round(math.multiply(b1*a11 +b2*a12 +b3*a13 +b4*a14,1000)),1000);
+			var ab2= math.divide(math.round(math.multiply(b1*a21 +b2*a22 +b3*a23 +b4*a24,1000)),1000);
+			var ab3= math.divide(math.round(math.multiply(b1*a31 +b2*a32 +b3*a33 +b4*a34,1000)),1000);
+			var ab4= math.divide(math.round(math.multiply(b1*a41 +b2*a42 +b3*a43 +b4*a44,1000)),1000);
+			
+			////////////////////////////////////////////////
+			
+			var aab1= math.divide(math.round(math.multiply(b1*aa11 +b2*aa12 +b3*aa13 +b4*aa14,1000)),1000);
+			var aab2= math.divide(math.round(math.multiply(b1*aa21 +b2*aa22 +b3*aa23 +b4*aa24,1000)),1000);
+			var aab3= math.divide(math.round(math.multiply(b1*aa31 +b2*aa32 +b3*aa33 +b4*aa34,1000)),1000);
+			var aab4= math.divide(math.round(math.multiply(b1*aa41 +b2*aa42 +b3*aa43 +b4*aa44,1000)),1000);
+			
+			/////////////////////////////////////////////
+			
+			var aaab1= math.divide(math.round(math.multiply(b1*aaa11 +b2*aaa12 +b3*aaa13 +b4*aaa14,1000)),1000);
+			var aaab2= math.divide(math.round(math.multiply(b1*aaa21 +b2*aaa22 +b3*aaa23 +b4*aaa24,1000)),1000);
+			var aaab3= math.divide(math.round(math.multiply(b1*aaa31 +b2*aaa32 +b3*aaa33 +b4*aaa34,1000)),1000);
+			var aaab4= math.divide(math.round(math.multiply(b1*aaa41 +b2*aaa42 +b3*aaa43 +b4*aaa44,1000)),1000);
+			
+			//////////////////////////////////////////////
+			var B= math.matrix([b1, b2, b3, b4]);
+			var AB= math.matrix([ab1,ab2, ab3, ab4]);
+			var AAB= math.matrix([aab1, aab2, aab3, aab4]);
+			var AAAB= math.matrix([aaab1, aaab2, aaab3, aaab4]);
+			
+			var Qc= math.matrix([[b1, ab1, aab1, aaab1],[b2, ab2, aab2, aaab2],[b3, ab3, aab3, aaab3],[b4, ab4, aab4, aaab4]]);
+			
+			document.getElementById('matQc').innerHTML = ' <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">Q<sub>c</sub></span> =['+ b1+',\t'+ab1+',\t'+aab1+',\t'+aaab1+';\t\t'+b2+','+ab2+',\t'+aab2+',\t'+aaab2+';\t\t'+b3+',\t'+ab3+',\t'+aab3+',\t'+aaab3+';\t\t'+b4+',\t'+ab4+',\t'+aab4+',\t'+aaab4+']'
+			
+			var DQc= math.divide(math.round(math.multiply(math.det(Qc),1000)),1000);
+			
+			if (DQc!=0)
+			{  Cntrl_Test1=" Rank is 4";			   
+			   Cntrl_Test2=" Determinent is" +'\t' + DQc;				    
+			   Cntrl_Test3=" System is completely controllable";
+			   document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
+			   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
+			   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
+			   
+			   var p1p2p3p4 = math.multiply(p1,p2,p3,p4);
+			  
+			   var p123 = math.multiply(p1,p2,p3);
+			   var p124 = math.multiply(p1,p2,p4);
+			   var p234 = math.multiply(p2,p3,p4);
+			   var p134 = math.multiply(p1,p3,p4);
+			   
+			   var p12 = math.multiply(p1,p2);
+			   var p13 = math.multiply(p1,p3);
+			   var p14 = math.multiply(p1,p4);
+			   var p23 = math.multiply(p2,p3);
+			   var p24 = math.multiply(p2,p4);
+			   var p34 = math.multiply(p3,p4);
+			   
+			   var coeff = [ [0,b2,0,b4],[b2,0,b4, math.add(math.multiply(a42,b2),-math.multiply(a22,b4))],[0,math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),math.add(math.multiply(a42,b2),-math.multiply(a22,b4)),0],[math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),0,0,0] ];
+			   var cont = [  math.add(p1,p2,p3,p4,a22), math.add(p12,p13,p14,p23,p24,p34,a43),math.add(p123,p124,p134,p234,math.multiply(a23,a42),-math.multiply(a22,a43)),p1p2p3p4 ];
+			   var sol = math.lusolve(coeff,cont);
+			   
+			   var k1 = math.divide(math.round(math.multiply(sol[0][0],1000000)),1000000);
+			   var k2 = math.divide(math.round(math.multiply(sol[1][0],1000000)),1000000);
+			   var k3 = math.divide(math.round(math.multiply(sol[2][0],1000000)),1000000);
+			   var k4 = math.divide(math.round(math.multiply(sol[3][0],1000000)),1000000);
+			  
+			   var K = math.matrix([[ k1, k2, k3, k4]]);
+			   
+			   console.log(K);
+			   
+			   //var ABK = math.add(mA,-math.multiply(mB,K));
+			   var ABK = math.matrix([[a11, a12, a13, a14], [-math.multiply(b2,k1), math.add(a22,-math.multiply(b2,k2)), math.add(a23,-math.multiply(b2,k3)), -math.multiply(b2,k4)], [a31, a32, a33, a34], [-math.multiply(b4,k1), math.add(a42,-math.multiply(b4,k2)), math.add(a43,-math.multiply(b4,k3)), -math.multiply(b4,k4)]]);;
+			   console.log(ABK);
+			   var iABK = math.inv(ABK);
+			   var CABKB = math.multiply(mC1,iABK,mB);
+			   
+			   var N = math.divide(math.round(math.multiply(math.divide(-1,CABKB),1000000)),1000000);
+			   
+			   console.log(N);
+			   var Nb = N._data[0];
+			 
+			var maxt = 100;
+	        var mint = 0;
+	
+	        var Cposi = []; //with Nb
+	        var Aposi = [];
+			
+			var dt =0.01;
+	
+		   var Pos = $("#initPos").val();
+		   
+	        var x = math.number(Pos);// with Nb
+			var x_dot = 0;
+			var x_ddot = 0;
+			
+			var Tdeg = $("#initAngle").val();
+			
+	        var theta = math.number(Tdeg);//math.multiply(Tdeg,math.divide(180,math.pi));//deg to rad
+			var theta_dot = 0;
+	        var theta_ddot = 0;
+			
+			var y1_up = 0;
+			var y2_up = 0;
+			
+			var va=0;//1;
+	
+           	var	t = mint;
+          	while(t<=maxt){
+        	
+			console.log(a11);
+			console.log(a12);
+			console.log(a13);
+			console.log(a14);
+			
+			console.log(a21);
+			console.log(a22);
+			console.log(a23);
+			console.log(a24);
+			
+			console.log(a31);
+			console.log(a32);
+			console.log(a33);
+			console.log(a34);
+			
+			console.log(a41);
+			console.log(a42);
+			console.log(a43);
+			console.log(a44);
+			
+			console.log(b1);
+			console.log(b2);
+			console.log(b3);
+			console.log(b4);
+			
+			console.log(c11);
+			console.log(c12);
+			console.log(c13);
+			console.log(c14);
+			
+			console.log(c21);
+			console.log(c22);
+			console.log(c23);
+			console.log(c24);
+			
+			console.log(k1);
+			console.log(k2);
+			console.log(k3);
+			console.log(k4);
+			
+			Cposi[t] = x;//y1_up;
+			dataOPPoints1.push({x:(t), y:(Cposi[t])});///displacement part with Nb
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi[t] = theta;//y2_up;
+			dataOPPoints2.push({x:(t), y:(Aposi[t])});///Angle part with Nb
+	       
+			x_dot = x_dot;
+			
+			
+			 x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot),math.multiply(b2,Nb,va));
+			
+			theta_dot = theta_dot;
+			
+			 theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot),math.multiply(b4,Nb,va));
+			 
+			
+			  x_dot += x_ddot * dt;
+			  x += (x_dot * dt );
+			  theta_dot += theta_ddot * dt;
+			  theta += (theta_dot * dt);
+			 
+			
+			console.log("theta ="+theta);
+			
+			Cposi[t] = x;//y1_up;
+			dataOPPoints1.push({x:(t), y:(Cposi[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi[t] = theta;//y2_up;
+			dataOPPoints2.push({x:(t), y:(Aposi[t])});///Angle part
+			
+		
+			t=math.add(t,dt);
+			}
+			
+			document.getElementById('plotbucket').style.display  = "block"; 
+ 
+document.getElementById('chartContainer1').style.display  = "block"; 	
+	var chart1 = new CanvasJS.Chart("chartContainer1",
+    {
+      animationEnabled: true,
+	  zoomEnabled:true,
+	  zoomType: "xy",
+		  animationDuration: 10000, 
+	  title:{
+      text: "Response (Cart Position vs. time) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#dddbdb",
+        title: "Time",
+		//logarithmic:true,
+		maximum:maxt,
+		minimum:mint,
+      },
+    axisY:[ 
+	      {/////output Y axis
+		  //logarithmic: true,
+            title: "Cart Position (m)",
+			
+			//maximum:1,
+        }
+		],
+	data:[ 
+      {        
+        type: "spline",
+		color:"#ed2c4e",
+        dataPoints:dataOPPoints1
+	
+       }
+	    
+	   ]
+       
+	});
+
+	chart1.render();	
+	//document.getElementById("exportChart").style.display = "block";
+	
+document.getElementById('chartContainer2').style.display  = "block"; 	
+	var chart2 = new CanvasJS.Chart("chartContainer2",
+    {
+      animationEnabled: true,
+	  zoomEnabled:true,
+	  zoomType: "xy",
+		  animationDuration: 10000, 
+	  title:{
+      text: " Response (Angular Position vs Time) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#dddbdb",
+        title: "Time",
+		//logarithmic:true,
+		maximum:maxt,
+		minimum:mint,
+      },
+    axisY:[ 
+	      {/////output Y axis
+		  //logarithmic: true,
+            title: "Angular Position (degree)",
+			
+			///maximum:0.3,
+        }
+		],
+	data:[ 
+      {        
+        type: "spline",
+		color:"red",
+        dataPoints:dataOPPoints2,		
+		
+       }
+	   ]
+       
+	});
+
+	chart2.render();
+	document.getElementById("exportChart").style.display = "block";
+	/* if(isPlotted1==true && isPlotted2==true){
+		document.getElementById('CompB').style.visibility = "visible";
+	} */
+			   
+			   
+			   
+			   
+			}
+			   else 
+			   {   Cntrl_Test1=" Rank < n = 4";
+		           Cntrl_Test2="Determinent is" + "" + DQc + "";		
+			       Cntrl_Test3=" System is not controllable";
+			       document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
+				   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
+				   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
+			   }
+			   
+			}
+else{
+	
+	alert('Enter initial position and initial angle values within the range as per the given instructions');
+}			
+			
+	       		
+           
+			
+			
+			
+	        
+	        
+			
+			
+			
+}
+
+
+function plotUS(){
+
+		var dataOPPoints1=[];	///for plotting chart with Pre Compensator (Nb)
+        var dataOPPoints2=[];
+		
+		
+		var dataOPPoints3=[];	///for plotting chart without Pre Compensator (Nb)
+        var dataOPPoints4=[]; 
+	
+	if(document.getElementById('initAngle').value <=6 && document.getElementById('initAngle').value >=-6 && document.getElementById('initPos').value <=10 && document.getElementById('initPos').value >=-10){
+            var M = document.getElementById('M1').value;			
+			var m = document.getElementById('m1').value;
+			var b = document.getElementById('bc').value;
+            var l = document.getElementById('l1').value;
+			var I = document.getElementById('I1').value;
+			
+			var P1 = document.getElementById('np1').value;			
+			var P2 = document.getElementById('np2').value;
+			var P3 = document.getElementById('np3').value;
+            var P4 = document.getElementById('np4').value;
+			
+			var p1=-P1;
+			var p2=-P2;
+			var p3=-P3;
+			var p4=-P4;
+						
+	        //var T = document.getElementById('Ts').value;
+						
+			var g=9.8;
+			
+			var den=math.add(math.multiply(I,math.add(M,m)),math.multiply(M,m,l,l));
+			
+		    var a22=math.divide(math.round(math.multiply(math.divide(-math.multiply(math.add(I,math.multiply(m,l,l)),b),den),1000)),1000);
+			
+			var a23=math.divide(math.round(math.multiply(math.divide(math.multiply(m,m,g,l,l),den),1000)),1000);;
+			var b2=math.divide(math.round(math.multiply(math.divide(math.add(I,math.multiply(m,l,l)),den),1000)),1000);;
+			
+			var a42=math.divide(math.round(math.multiply(math.divide(-math.multiply(m,l,b),den),1000)),1000);;
+			var a43=math.divide(math.round(math.multiply(math.divide(math.add(math.multiply(m,g,l,M),math.multiply(m,g,l,m)),den),1000)),1000);;
+			var b4=math.divide(math.round(math.multiply(math.divide(math.multiply(m,l),den),1000)),1000);;
+			
+			var a11=a13=a14=a21=a24=a31=a32=a33=a41=a44=b1=b3=c12=c13=c14=c21=c22=c24=0;
+			var a12=a34=c11=c23=1;
+			
+			var mA = math.matrix([[a11, a12, a13, a14], [a21, a22, a23, a24], [a31, a32, a33, a34], [a41, a42, a43, a44]]);
+            var mC1 = math.matrix([[c11, c12, c13, c14]]);
+			var mB = math.matrix([[b1], [b2], [b3], [b4]]);
+			
+			var aa11= a11*a11+a12*a21+a13*a31+a14*a41;
+			var aa12= a11*a12+a12*a22+a13*a32+a14*a42;
+			var aa13= a11*a13+a12*a23+a13*a33+a14*a43;
+			var aa14= a11*a14+a12*a24+a13*a34+a14*a44;
+		
+			var aa21= a21*a11 +a22*a21 +a23*a31 +a24*a41;
+			var aa22= a21*a12 +a22*a22 +a23*a32 +a24*a42;
+			var aa23= a21*a13 +a22*a23 +a23*a33 +a24*a43;
+			var aa24= a21*a14 +a22*a24 +a23*a34 +a24*a44;
+			
+			var aa31= a31*a11 +a32*a21 +a33*a31 +a34*a41;
+			var aa32= a31*a12 +a32*a22 +a33*a32 +a34*a42;
+			var aa33= a31*a13 +a32*a23 +a33*a33 +a34*a43;
+			var aa34= a31*a14 +a32*a24 +a33*a34 +a34*a44;
+			
+			var aa41= a41*a11 +a42*a21 +a43*a31 +a44*a41;
+			var aa42= a41*a12 +a42*a22 +a43*a32 +a44*a42;
+			var aa43= a41*a13 +a42*a23 +a43*a33 +a44*a43;
+			var aa44= a41*a14 +a42*a24 +a43*a34 +a44*a44;
+			
+			///////////////////////////////////////////
+			
+			var aaa11= a11*aa11+a12*aa21+a13*aa31+a14*aa41;
+			var aaa12= a11*aa12+a12*aa22+a13*aa32+a14*aa42;
+			var aaa13= a11*aa13+a12*aa23+a13*aa33+a14*aa43;
+			var aaa14= a11*aa14+a12*aa24+a13*aa34+a14*aa44;
+		
+			var aaa21= a21*aa11 +a22*aa21 +a23*aa31 +a24*aa41;
+			var aaa22= a21*aa12 +a22*aa22 +a23*aa32 +a24*aa42;
+			var aaa23= a21*aa13 +a22*aa23 +a23*aa33 +a24*aa43;
+			var aaa24= a21*aa14 +a22*aa24 +a23*aa34 +a24*aa44;
+			
+			var aaa31= a31*aa11 +a32*aa21 +a33*aa31 +a34*aa41;
+			var aaa32= a31*aa12 +a32*aa22 +a33*aa32 +a34*aa42;
+			var aaa33= a31*aa13 +a32*aa23 +a33*aa33 +a34*aa43;
+			var aaa34= a31*aa14 +a32*aa24 +a33*aa34 +a34*aa44;
+			
+			var aaa41= a41*aa11 +a42*aa21 +a43*aa31 +a44*aa41;
+			var aaa42= a41*aa12 +a42*aa22 +a43*aa32 +a44*aa42;
+			var aaa43= a41*aa13 +a42*aa23 +a43*aa33 +a44*aa43;
+			var aaa44= a41*aa14 +a42*aa24 +a43*aa34 +a44*aa44;
+			
+			//////////////////////////////////////////////
+			
+			var ab1= math.divide(math.round(math.multiply(b1*a11 +b2*a12 +b3*a13 +b4*a14,1000)),1000);
+			var ab2= math.divide(math.round(math.multiply(b1*a21 +b2*a22 +b3*a23 +b4*a24,1000)),1000);
+			var ab3= math.divide(math.round(math.multiply(b1*a31 +b2*a32 +b3*a33 +b4*a34,1000)),1000);
+			var ab4= math.divide(math.round(math.multiply(b1*a41 +b2*a42 +b3*a43 +b4*a44,1000)),1000);
+			
+			////////////////////////////////////////////////
+			
+			var aab1= math.divide(math.round(math.multiply(b1*aa11 +b2*aa12 +b3*aa13 +b4*aa14,1000)),1000);
+			var aab2= math.divide(math.round(math.multiply(b1*aa21 +b2*aa22 +b3*aa23 +b4*aa24,1000)),1000);
+			var aab3= math.divide(math.round(math.multiply(b1*aa31 +b2*aa32 +b3*aa33 +b4*aa34,1000)),1000);
+			var aab4= math.divide(math.round(math.multiply(b1*aa41 +b2*aa42 +b3*aa43 +b4*aa44,1000)),1000);
+			
+			/////////////////////////////////////////////
+			
+			var aaab1= math.divide(math.round(math.multiply(b1*aaa11 +b2*aaa12 +b3*aaa13 +b4*aaa14,1000)),1000);
+			var aaab2= math.divide(math.round(math.multiply(b1*aaa21 +b2*aaa22 +b3*aaa23 +b4*aaa24,1000)),1000);
+			var aaab3= math.divide(math.round(math.multiply(b1*aaa31 +b2*aaa32 +b3*aaa33 +b4*aaa34,1000)),1000);
+			var aaab4= math.divide(math.round(math.multiply(b1*aaa41 +b2*aaa42 +b3*aaa43 +b4*aaa44,1000)),1000);
+			
+			//////////////////////////////////////////////
+			var B= math.matrix([b1, b2, b3, b4]);
+			var AB= math.matrix([ab1,ab2, ab3, ab4]);
+			var AAB= math.matrix([aab1, aab2, aab3, aab4]);
+			var AAAB= math.matrix([aaab1, aaab2, aaab3, aaab4]);
+			
+			/* document.getElementById('matQcB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px">B</span> ='+ B;
+			document.getElementById('matQcAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> AB</span> ='+ AB;
+			document.getElementById('matQcAAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A<sup>2</sup>B</span> ='+ AAB;
+			document.getElementById('matQcAAAB').innerHTML = '<span style="font-family:Bodoni MT;font-style:italic;font-size:18px"> A<sup>3</sup>B</span> ='+ AAAB; */
+			
+			//var Qc1= math.matrix([[0, 1.818, -0.331, 12.209], [1.818, -0.331, 12.209, -4.433], [0, 4.545, -0.827, 141.873], [4.545, -0.827, 141.873, -31.349]]);
+			//var DQc1=math.det(Qc1);
+			//console.log(DQc1);
+			
+			var Qc= math.matrix([[b1, ab1, aab1, aaab1],[b2, ab2, aab2, aaab2],[b3, ab3, aab3, aaab3],[b4, ab4, aab4, aaab4]]);
+			
+			document.getElementById('matQc').innerHTML = ' <span style="font-family:Bodoni MT;font-style:italic;font-size:18px">Q<sub>c</sub></span> =['+ b1+',\t'+ab1+',\t'+aab1+',\t'+aaab1+';\t\t'+b2+','+ab2+',\t'+aab2+',\t'+aaab2+';\t\t'+b3+',\t'+ab3+',\t'+aab3+',\t'+aaab3+';\t\t'+b4+',\t'+ab4+',\t'+aab4+',\t'+aaab4+']'
+			
+			var DQc= math.divide(math.round(math.multiply(math.det(Qc),1000)),1000);
+			
+			console.log(DQc);
+			//document.getElementById('RQc').value = 4;
+			//DQc=0;
+			
+			if (DQc!=0)
+			{  Cntrl_Test1=" Rank is 4";			   
+			   Cntrl_Test2=" Determinent is" +'\t' + DQc;				    
+			   Cntrl_Test3=" System is completely controllable";
+			   document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
+			   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
+			   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
+			   
+			   var p1p2p3p4 = math.multiply(p1,p2,p3,p4);
+			  /*  var a23b4 = math.multiply(a23,b4);
+			   var a43b2 = math.multiply(a43,b2);
+			   
+			   //var k1 = math.divide(p1p2p3p4, math.add(a23b4,-a43b2));
+			   
+			   var k1=math.divide(math.round(math.multiply(math.divide(p1p2p3p4, math.add(a23b4,-a43b2)),1000)),1000);
+			   
+			   var k2 = math.divide(math.round(math.multiply(math.divide(math.add(p1,p2,p3,p4,a22),b2),1000)),1000); */
+			   
+			   var p123 = math.multiply(p1,p2,p3);
+			   var p124 = math.multiply(p1,p2,p4);
+			   var p234 = math.multiply(p2,p3,p4);
+			   var p134 = math.multiply(p1,p3,p4);
+			   
+			   /* var a42a23 = math.multiply(a42,a23);
+			   var a43b2k2 = math.multiply(a43,b2,k2);
+			   var a22a43 = math.multiply(a22,a43);
+			   var a23b4k2 = math.multiply(a23,b4,k2);
+			   
+			   var num3 = math.add(p123,p124,p234,p134,a42a23,a43b2k2,-a22a43,-a23b4k2);
+			   
+			   var a42b2 = math.multiply(a42,b2);
+			   var b2b4k2 = math.multiply(b2,b4,k2);
+			   var a22b4 = math.multiply(a22,b4);
+			   
+			   var den3 = math.add(a42b2,b2b4k2,-a22b4,b2b4k2);
+		   
+			   var k3 = math.divide(math.round(math.multiply(math.divide(num3,den3),1000)),1000); */
+			   
+			   var p12 = math.multiply(p1,p2);
+			   var p13 = math.multiply(p1,p3);
+			   var p14 = math.multiply(p1,p4);
+			   var p23 = math.multiply(p2,p3);
+			   var p24 = math.multiply(p2,p4);
+			   var p34 = math.multiply(p3,p4);
+			   
+			  /*  var b4k2 = math.multiply(b4,k2);
+			   var b2k1 = math.multiply(b2,k1);
+			   
+			   var num4 = math.add(p12,p13,p14,p23,p24,p34,a43,-b4k2,-b2k1);
+			   var den4 = math.add(a42b2,-b2b4k2);
+			   
+			   var k4 = math.divide(math.round(math.multiply(math.divide(num4,den4),1000)),1000); */
+			   
+			   var coeff = [ [0,b2,0,b4],[b2,0,b4, math.add(math.multiply(a42,b2),-math.multiply(a22,b4))],[0,math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),math.add(math.multiply(a42,b2),-math.multiply(a22,b4)),0],[math.add(math.multiply(a23,b4),-math.multiply(a43,b2)),0,0,0] ];
+			   var cont = [  math.add(p1,p2,p3,p4,a22), math.add(p12,p13,p14,p23,p24,p34,a43),math.add(p123,p124,p134,p234,math.multiply(a23,a42),-math.multiply(a22,a43)),p1p2p3p4 ];
+			   var sol = math.lusolve(coeff,cont);
+			   
+			   var k1 = math.divide(math.round(math.multiply(sol[0][0],1000000)),1000000);
+			   var k2 = math.divide(math.round(math.multiply(sol[1][0],1000000)),1000000);
+			   var k3 = math.divide(math.round(math.multiply(sol[2][0],1000000)),1000000);
+			   var k4 = math.divide(math.round(math.multiply(sol[3][0],1000000)),1000000);
+			   
+			   console.log(k1);
+			   console.log(k2);
+			   console.log(k3);
+			   console.log(k4);
+			   
+			  /* K1="Feedback gain k1 = " +k1+ "";
+			   
+			   document.getElementById("Feedback_gain_Value1").innerHTML=K1;
+			   
+			   K2="Feedback gain k2 = " +k2+ "";
+			   
+			   document.getElementById("Feedback_gain_Value2").innerHTML=K2;
+			   
+			   K3="Feedback gain k3 = " +k3+ "";
+			   
+			   document.getElementById("Feedback_gain_Value3").innerHTML=K3;
+			   
+			   
+			   K4="Feedback gain k4 = " +k4+ "";
+			   
+			   document.getElementById("Feedback_gain_Value4").innerHTML=K4; */
+			   
+			   var K = math.matrix([[ k1, k2, k3, k4]]);
+			   
+			   console.log(K);
+			   
+			   //var ABK = math.add(mA,-math.multiply(mB,K));
+			   var ABK = math.matrix([[a11, a12, a13, a14], [-math.multiply(b2,k1), math.add(a22,-math.multiply(b2,k2)), math.add(a23,-math.multiply(b2,k3)), -math.multiply(b2,k4)], [a31, a32, a33, a34], [-math.multiply(b4,k1), math.add(a42,-math.multiply(b4,k2)), math.add(a43,-math.multiply(b4,k3)), -math.multiply(b4,k4)]]);;
+			   console.log(ABK);
+			   var iABK = math.inv(ABK);
+			   var CABKB = math.multiply(mC1,iABK,mB);
+			   
+			   var N = math.divide(math.round(math.multiply(math.divide(-1,CABKB),1000000)),1000000);
+			   
+			   console.log(N);
+			   var Nb = N._data[0];
+			  // Kfb="Feedback gain K = " +K+ "";
+			   
+			   //document.getElementById("Feedback_gain_Value_K").innerHTML=Kfb;
+			   
+			   //outputText2=" b<sub>0</sub>="+b0+";  b<sub>1</sub>="+b1+"; b<sub>2</sub>="+b2+ "; a<sub>0</sub>="+a0+";  a<sub>1</sub>="+a1+";  a<sub>2</sub>="+a2+ "";
+			   
+			   
+			var maxt = 100;
+	        var mint = 0;
+	
+		
+            var yop = new Array();	///continous data output result storing
+	        var Cposi = []; //with Nb
+	        var Aposi = [];
+			
+			var Cposi1 = [];//without Nb
+	        var Aposi1 = []; 
+			
+			var dt =0.01;
+	
+	        //var x1_ini = 0;
+	       // var x2_ini = 0;
+		   
+		   var Pos = $("#initPos").val();
+		   
+	        var x = 0;//math.number(Pos);// with Nb
+			var x_dot = 0;
+			var x_ddot = 0;
+			
+			
+			var x1 = 0;// math.number(Pos);// without Nb//0;
+			var x_dot1 = 0;
+			var x_ddot1=0; //without Nb 
+			
+			
+			var Tdeg = 0;//$("#initAngle").val();
+			
+	        var theta = math.number(Tdeg);//math.multiply(Tdeg,math.divide(180,math.pi));//deg to rad
+			var theta_dot = 0;
+	        var theta_ddot = 0;
+			
+		 	var theta1 =0;// math.number(Tdeg);//math.multiply(Tdeg,math.divide(180,math.pi));//deg to rad
+			var theta_dot1 = 0;
+			var theta_ddot1 = 0; //without Nb
+			 
+			/* var x1_up1 = 1;
+	        var x2_up1 = 0;
+			var x3_up1 = 0;
+	        var x4_up1 = 0; */
+			
+			var y1_up = 0;
+			var y2_up = 0;
+			
+			var va=1;//1;
+	
+           	var	t = mint;
+          	while(t<=maxt){
+        	//for(var f=minf;f<=maxf;f++){
+	        
+			/* console.log(x1_up1);
+			console.log(x2_up1);
+			console.log(x3_up1);
+			console.log(x4_up1); */
+			
+			console.log(a11);
+			console.log(a12);
+			console.log(a13);
+			console.log(a14);
+			
+			console.log(a21);
+			console.log(a22);
+			console.log(a23);
+			console.log(a24);
+			
+			console.log(a31);
+			console.log(a32);
+			console.log(a33);
+			console.log(a34);
+			
+			console.log(a41);
+			console.log(a42);
+			console.log(a43);
+			console.log(a44);
+			
+			console.log(b1);
+			console.log(b2);
+			console.log(b3);
+			console.log(b4);
+			
+			console.log(c11);
+			console.log(c12);
+			console.log(c13);
+			console.log(c14);
+			
+			console.log(c21);
+			console.log(c22);
+			console.log(c23);
+			console.log(c24);
+			
+			console.log(k1);
+			console.log(k2);
+			console.log(k3);
+			console.log(k4);
+			
+			Cposi[t] = x;//y1_up;
+			dataOPPoints1.push({x:(t), y:(Cposi[t])});///displacement part with Nb
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi[t] = theta;//y2_up;
+			dataOPPoints2.push({x:(t), y:(Aposi[t])});///Angle part with Nb
+	        //dArray2 = dataOPPoints2;
+			
+			Cposi1[t] = x1;//y1_up;
+			dataOPPoints3.push({x:(t), y:(Cposi1[t])});///displacement part without Nb
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi1[t] = theta1;//y2_up;
+			dataOPPoints4.push({x:(t), y:(Aposi1[t])});///Angle part without Nb
+	        //dArray2 = dataOPPoints2;
+			 
+		    /* x1_up = math.add(math.multiply(math.add(ad11,-math.multiply(bd1,k1)),x1_up1),math.multiply(math.add(ad12,-math.multiply(bd1,k2)),x2_up1));//,math.multiply(bd1,va));
+			x2_up = math.add(math.multiply(math.add(ad21,-math.multiply(bd2,k1)),x1_up1),math.multiply(math.add(ad22,-math.multiply(bd2,k2)),x2_up1));//,math.multiply(bd2,va));
+			 */
+			
+			//with Nb
+			x_dot = x_dot;
+			
+			/* x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot));
+			 */ 
+			 
+			 x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot),math.multiply(b2,Nb,va));
+			
+			 //without Nb
+			 
+			 x_dot1 = x_dot1;
+			
+			/* x_ddot = math.add(math.multiply(-b2,k1,x),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta),-math.multiply(b2,k4,theta_dot));
+			 */ 
+			 
+			x_ddot1 = math.add(math.multiply(-b2,k1,x1),math.multiply(math.add(a22,-math.multiply(b2,k2)),x_dot1),math.multiply(math.add(a23,-math.multiply(b2,k3)),theta1),-math.multiply(b2,k4,theta_dot1),math.multiply(b2,va));
+			
+			  
+			//with nb
+			
+			//x_ddot = math.add(math.multiply(a22,x_dot),math.multiply(a23,theta),math.multiply(b2,va));
+			
+			theta_dot = theta_dot;
+			
+			/* theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot));
+			  */
+			  
+			 theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot),math.multiply(b4,Nb,va));
+			 
+			 //without Nb
+			 
+			 theta_dot1 = theta_dot1;
+			
+			// theta_ddot = math.add(math.multiply(-b4,k1,x),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta),-math.multiply(b4,k4,theta_dot));
+			  
+			  
+			theta_ddot1 = math.add(math.multiply(-b4,k1,x1),math.multiply(math.add(a42,-math.multiply(b4,k2)),x_dot1),math.multiply(math.add(a43,-math.multiply(b4,k3)),theta1),-math.multiply(b4,k4,theta_dot1),math.multiply(b4,va));
+			 
+			  
+			
+			//theta_ddot = math.add(math.multiply(a42,x_dot),math.multiply(a43,theta),math.multiply(b4,va));
+			
+			  x_dot += x_ddot * dt;
+			  x += (x_dot * dt );
+			  theta_dot += theta_ddot * dt;
+			  theta += (theta_dot * dt);
+			  
+			  //without Nb
+			  
+			   x_dot1 += x_ddot1 * dt;
+			  x1 += (x_dot1 * dt );
+			  theta_dot1 += theta_ddot1 * dt;
+			  theta1 += (theta_dot1 * dt); 
+			
+			console.log("theta ="+theta);
+			
+			Cposi[t] = x;//y1_up;
+			dataOPPoints1.push({x:(t), y:(Cposi[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi[t] = theta;//y2_up;
+			dataOPPoints2.push({x:(t), y:(Aposi[t])});///Angle part
+			
+			
+			//without Nb
+			
+			Cposi1[t] = x1;//y1_up;
+			dataOPPoints3.push({x:(t), y:(Cposi1[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			Aposi1[t] = theta1;//y2_up;
+			dataOPPoints4.push({x:(t), y:(Aposi1[t])});///Angle part
+			 
+			 
+	  /* x_dot += x_ddot * dt;
+      x += (x_dot * dt );
+      theta_dot += theta_ddot * dt;
+      theta += (theta_dot * dt); */
+			 
+			 
+			 /* 
+			 x1_up1 = x1_up ;
+	         x2_up1 = x2_up ;
+             x3_up1 = x3_up ;
+	         x4_up1 = x4_up ;			 
+			
+			
+			console.log(x1_up);
+			console.log(x2_up);
+			console.log(x3_up);
+			console.log(x4_up); */
+			
+			
+		    /* disp[t] = x1_up;//y1_up;
+			dataOPPoints1.push({x:(t), y:(disp[t])});///displacement part
+	        //dArray1 = dataOPPoints1;
+			
+			vel[t] = x2_up;//y2_up;
+			dataOPPoints2.push({x:(t), y:(vel[t])});///velocity part
+	        //dArray1 = dataOPPoints2; */
+			
+			t=math.add(t,dt);
+			}
+			
+			document.getElementById('plotbucket').style.display  = "block"; 
+ 
+document.getElementById('chartContainer1').style.display  = "block"; 	
+	var chart1 = new CanvasJS.Chart("chartContainer1",
+    {
+      animationEnabled: true,
+	  zoomEnabled:true,
+	  zoomType: "xy",
+		  animationDuration: 10000, 
+	  title:{
+      text: "Response (Cart Position vs. time) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#dddbdb",
+        title: "Time",
+		//logarithmic:true,
+		maximum:maxt,
+		minimum:mint,
+      },
+    axisY:[ 
+	      {/////output Y axis
+		  //logarithmic: true,
+            title: "Cart Position (m)",
+			
+			//maximum:1,
+        },
+		{
+			gridThickness: 0, 
+			tickLength:0, 
+			lineThickness:0
+			} 
+		],
+	data:[ 
+      {        
+        type: "spline",
+		color:"#ed2c4e",
+        dataPoints:dataOPPoints1
+	
+       },
+	    {        
+        type: "spline",
+		color:"black",
+        dataPoints:dataOPPoints3
+	
+       }, 
+	   
+	   
+	   ]
+       
+	});
+
+	chart1.render();	
+	//document.getElementById("exportChart").style.display = "block";
+	
+document.getElementById('chartContainer2').style.display  = "block"; 	
+	var chart2 = new CanvasJS.Chart("chartContainer2",
+    {
+      animationEnabled: true,
+	  zoomEnabled:true,
+	  zoomType: "xy",
+		  animationDuration: 10000, 
+	  title:{
+      text: " Response (Angular Position vs Time) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#dddbdb",
+        title: "Time",
+		//logarithmic:true,
+		maximum:maxt,
+		minimum:mint,
+      },
+    axisY:[ 
+	      {/////output Y axis
+		  //logarithmic: true,
+            title: "Angular Position (degree)",
+			
+			///maximum:0.3,
+        },
+		{
+			gridThickness: 0, 
+			tickLength:0, 
+			lineThickness:0
+			} 
+		
+		],
+	data:[ 
+      {        
+        type: "spline",
+		color:"red",
+        dataPoints:dataOPPoints2,		
+		showInLegend:true,
+		legendText:"With Pre-Compensator"
+	
+       },
+	    {        
+        type: "spline",
+		color:"black",
+        dataPoints:dataOPPoints4,
+		showInLegend:true,
+		legendText:"Without Pre-Compensator"
+	
+       },
+	   
+	   ]
+       
+	});
+
+	chart2.render();
+	document.getElementById("exportChart").style.display = "block";
+	/* if(isPlotted1==true && isPlotted2==true){
+		document.getElementById('CompB').style.visibility = "visible";
+	} */
+			   
+			   
+			   
+			   
+			}
+			   else 
+			   {   Cntrl_Test1=" Rank < n = 4";
+		           Cntrl_Test2="Determinent is" + "" + DQc + "";		
+			       Cntrl_Test3=" System is not controllable";
+			       document.getElementById("Cntrl_Test1").innerHTML=Cntrl_Test1;
+				   document.getElementById("Cntrl_Test2").innerHTML=Cntrl_Test2;
+				   document.getElementById("Cntrl_Test3").innerHTML=Cntrl_Test3;
+			   }
+			   
+			}
+else{
+	
+	alert('Enter initial position and initial angle values within the range as per the given instructions');
+}			
+			
+		
+			
+}
+
+var test1F = false;
+var test2F = false;
+var test3F = false;
+
+function plot(){
+	if(test1F){
+		plotIC();
+	}
+	else if(test2F){
+		plotUS();
+	}
+	else if(test3F){
+		plotSSM();
+	}
+}
+
+
+
+///code for downloading the plot area
+
+function saveAs(uri, filename) {
+
+    var link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+
+        link.href = uri;
+        link.download = filename;
+
+        //Firefox requires the link to be in the body
+        document.body.appendChild(link);
+
+        //simulate click
+        link.click();
+
+        //remove the link when done
+        document.body.removeChild(link);
+
+    } else {
+
+        window.open(uri);
+
+    }
+}
+
+function saveImg(){
+html2canvas(document.querySelector('#plotbucket')).then(function(canvas) {
+
+        saveAs(canvas.toDataURL(), 'Plot.png');
+    }); 
+	
+	
+}
